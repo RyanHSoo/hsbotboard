@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily News - Ryan's Archive</title>
     <style>
+        /* 00_memo.html과 동일한 스타일 */
         * { box-sizing: border-box; }
         body { margin: 0; font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
         .sidebar { width: 260px; background-color: #ebf4ff; border-right: 1px solid #d1e3f8; padding: 40px 20px; display: flex; flex-direction: column; }
@@ -18,7 +19,10 @@
         .nav-menu a.active { background-color: #ffffff; color: #1a73e8; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .divider { height: 1px; background-color: #d1e3f8; margin: 15px 5px; opacity: 0.8; }
         .main-content { flex: 1; background-color: #ffffff; padding: 60px 80px; overflow-y: auto; }
-        h1 { font-size: 2.1em; color: #1a202c; margin-bottom: 35px; border-bottom: 3px solid #ebf4ff; padding-bottom: 15px; }
+        h1 { font-size: 2.1em; color: #1a202c; margin-bottom: 30px; border-bottom: 3px solid #ebf4ff; padding-bottom: 15px; }
+        .search-area { margin-bottom: 25px; max-width: 500px; }
+        #tableSearch { width: 100%; padding: 12px 15px; border: 2px solid #edf2f7; border-radius: 10px; outline: none; }
+        #tableSearch:focus { border-color: #1a73e8; }
         .table-board { width: 100%; border-collapse: collapse; }
         .table-board th { border-bottom: 2px solid #2d3748; padding: 15px; text-align: left; color: #718096; font-size: 0.9em; }
         .table-board td { padding: 18px 15px; border-bottom: 1px solid #edf2f7; color: #2d3748; }
@@ -42,10 +46,27 @@
     </nav>
     <main class="main-content">
         <h1>Daily News</h1>
-        <table class="table-board">
-            <thead><tr><th class="no">No</th><th class="date">Date</th><th>Title</th></tr></thead>
-            <tbody><tr><td class="no">001</td><td class="date">2026-04-03</td><td><a href="#" class="title-link">데일리 뉴스 준비 중...</a></td></tr></tbody>
+        <div class="search-area">
+            <input type="text" id="tableSearch" onkeyup="filterTable()" placeholder="뉴스 제목, 키워드 검색...">
+        </div>
+        <table class="table-board" id="mainTable">
+            <thead>
+                <tr><th class="no">No</th><th class="date">Date</th><th>Title</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="no">001</td><td class="date">2026-04-03</td><td><a href="#" class="title-link">데일리 뉴스 보드가 활성화되었습니다.</a></td></tr>
+            </tbody>
         </table>
     </main>
+    <script>
+        function filterTable() {
+            const input = document.getElementById('tableSearch').value.toLowerCase();
+            const rows = document.getElementById('mainTable').getElementsByTagName('tr');
+            for (let i = 1; i < rows.length; i++) {
+                const text = rows[i].innerText.toLowerCase();
+                rows[i].style.display = text.includes(input) ? "" : "none";
+            }
+        }
+    </script>
 </body>
 </html>
