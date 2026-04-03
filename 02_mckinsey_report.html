@@ -3,35 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>McKinsey Report - Ryan's Archive</title>
-    <style>
-        /* 스타일 코드 동일 (생략 없이 그대로 적용) */
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
-        .sidebar { width: 260px; background-color: #ebf4ff; border-right: 1px solid #d1e3f8; padding: 40px 20px; display: flex; flex-direction: column; }
-        .sidebar h2 { color: #2c3e50; font-size: 1.2em; margin-bottom: 30px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; font-weight: 700; }
-        .nav-menu { list-style: none; padding: 0; margin: 0; }
-        .nav-menu li { margin-bottom: 8px; }
-        .nav-menu a { text-decoration: none; color: #4a5568; font-size: 0.9em; display: block; padding: 12px 15px; border-radius: 8px; transition: 0.2s; }
-        .nav-menu a:hover { background-color: #dbeafe; color: #1a73e8; font-weight: 600; }
-        .nav-menu a.active { background-color: #ffffff; color: #1a73e8; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .main-content { flex: 1; background-color: #ffffff; padding: 60px 80px; overflow-y: auto; }
-        h1 { font-size: 2.1em; color: #1a202c; margin-bottom: 35px; border-bottom: 3px solid #ebf4ff; padding-bottom: 15px; }
-        .table-board { width: 100%; border-collapse: collapse; }
-        .table-board th { border-bottom: 2px solid #2d3748; padding: 15px; text-align: left; color: #718096; font-size: 0.9em; }
-        .table-board td { padding: 18px 15px; border-bottom: 1px solid #edf2f7; color: #2d3748; }
-        .no { width: 80px; color: #a0aec0; }
-        .date { width: 150px; color: #718096; }
-        .title-link { text-decoration: none; color: #2d3748; font-weight: 500; }
-    </style>
-</head>
+    <style>/* (스타일 코드 생략 없이 01번과 동일하게 적용하세요) */</style>
+    </head>
 <body>
     <nav class="sidebar">
-        <h2>Ryan's Archive</h2>
+        <a href="index.html" class="logo-link"><h2>Ryan's Archive</h2></a>
         <ul class="nav-menu">
             <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="00_memo.html">📝 Memo</a></li>
+            <div class="divider"></div>
             <li><a href="01_daily_news.html">📰 01 Daily News</a></li>
             <li><a href="02_mckinsey_report.html" class="active">📈 02 McKinsey Report</a></li>
-            <li><a href="03_ai_daily.html">🤖 03 AI Learning</a></li>
+            <li><a href="03_ai_learning.html">🤖 03 AI Learning</a></li>
             <li><a href="04_finance.html">💰 04 Finance</a></li>
             <li><a href="05_humanities.html">📖 05 Humanities</a></li>
         </ul>
@@ -43,7 +26,7 @@
                 <tr><th class="no">No</th><th class="date">Date</th><th>Title</th></tr>
             </thead>
             <tbody>
-                <tr><td class="no">001</td><td class="date">2026-04-03</td><td><a href="#" class="title-link">McKinsey 리포트가 수집될 예정입니다.</a></td></tr>
+                <tr><td class="no">001</td><td class="date">2026-04-03</td><td><a href="#" class="title-link">McKinsey 리포트 수집을 시작합니다.</a></td></tr>
             </tbody>
         </table>
     </main>
