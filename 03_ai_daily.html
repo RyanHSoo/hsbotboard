@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McKinsey Insight - Ryan's Archive</title>
+    <style>
+        /* 기본 스타일 (index.html과 통일) */
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { width: 250px; background-color: #ebf4ff; border-right: 1px solid #d1e3f8; padding: 40px 20px; display: flex; flex-direction: column; }
+        .sidebar h2 { color: #2c3e50; font-size: 1.1em; margin-bottom: 30px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; }
+        .nav-menu { list-style: none; padding: 0; }
+        .nav-menu a { text-decoration: none; color: #4a5568; display: block; padding: 12px 15px; border-radius: 8px; margin-bottom: 10px; }
+        .nav-menu a:hover { background-color: #dbeafe; color: #1a73e8; }
+        .nav-menu a.active { background-color: #ffffff; color: #1a73e8; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+        .main-content { flex: 1; background-color: #ffffff; padding: 60px 80px; overflow-y: auto; }
+        h1 { font-size: 2em; color: #1a202c; margin-bottom: 30px; }
+
+        /* 카테고리 전용 게시판 테이블 스타일 */
+        .table-board { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .table-board th { border-bottom: 2px solid #2d3748; padding: 15px; text-align: left; color: #718096; font-size: 0.9em; }
+        .table-board td { padding: 18px 15px; border-bottom: 1px solid #edf2f7; color: #2d3748; }
+        .no { width: 80px; color: #a0aec0; font-family: monospace; }
+        .date { width: 150px; color: #718096; font-size: 0.95em; }
+        .title-link { text-decoration: none; color: #2d3748; font-weight: 500; transition: 0.2s; }
+        .title-link:hover { color: #1a73e8; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <h2>RYAN ARCHIVE</h2>
+        <ul class="nav-menu">
+            <li><a href="index.html">🏠 Home (All)</a></li>
+            <li><a href="mckinsey.html" class="active">📈 McKinsey</a></li>
+            <li><a href="finance.html">💰 Finance</a></li>
+            <li><a href="humanities.html">📖 Humanities</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1>McKinsey Insight Archive</h1>
+        <table class="table-board">
+            <thead>
+                <tr>
+                    <th class="no">No</th>
+                    <th class="date">Date</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody id="mckinsey-list">
+                <tr>
+                    <td class="no">001</td>
+                    <td class="date">2026-04-03</td>
+                    <td><a href="#" class="title-link">게시판이 생성되었습니다. 첫 번째 분석 리포트를 기다리는 중...</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+</body>
+</html>
