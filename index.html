@@ -8,21 +8,15 @@
         * { box-sizing: border-box; }
         body { margin: 0; font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
         .sidebar { width: 260px; background-color: #ebf4ff; border-right: 1px solid #d1e3f8; padding: 40px 20px; display: flex; flex-direction: column; }
-        
-        /* 로고 스타일: 클릭 가능하게 변경 */
         .logo-link { text-decoration: none; color: #2c3e50; }
-        .sidebar h2 { font-size: 1.25em; margin-bottom: 30px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+        .sidebar h2 { font-size: 1.25em; margin-bottom: 30px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; font-weight: 800; transition: 0.2s; }
         .sidebar h2:hover { color: #1a73e8; }
-
         .nav-menu { list-style: none; padding: 0; margin: 0; }
         .nav-menu li { margin-bottom: 8px; }
         .nav-menu a { text-decoration: none; color: #4a5568; font-size: 0.9em; display: block; padding: 12px 15px; border-radius: 8px; transition: 0.2s; }
         .nav-menu a:hover { background-color: #dbeafe; color: #1a73e8; font-weight: 600; }
         .nav-menu a.active { background-color: #ffffff; color: #1a73e8; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-
-        /* 구분선 스타일 */
-        .divider { height: 1px; background-color: #d1e3f8; margin: 15px 5px; opacity: 0.6; }
-
+        .divider { height: 1px; background-color: #d1e3f8; margin: 15px 5px; opacity: 0.8; }
         .main-content { flex: 1; background-color: #ffffff; padding: 60px 80px; overflow-y: auto; }
         .welcome-section { margin-bottom: 60px; }
         .welcome-section h1 { font-size: 2.4em; color: #1a202c; margin: 0; font-weight: 800; }
@@ -40,9 +34,9 @@
     <nav class="sidebar">
         <a href="index.html" class="logo-link"><h2>Ryan's Archive</h2></a>
         <ul class="nav-menu">
-            <li><a href="index.html" class="active">🏠 Home</a></li>
             <li><a href="00_memo.html">📝 Memo</a></li>
-            <div class="divider"></div> <li><a href="01_daily_news.html">📰 01 Daily News</a></li>
+            <div class="divider"></div>
+            <li><a href="01_daily_news.html">📰 01 Daily News</a></li>
             <li><a href="02_mckinsey_report.html">📈 02 McKinsey Report</a></li>
             <li><a href="03_ai_learning.html">🤖 03 AI Learning</a></li>
             <li><a href="04_finance.html">💰 04 Finance</a></li>
@@ -56,11 +50,11 @@
         </section>
         <div class="section-title">✨ Recent Updates</div>
         <div id="board-list">
-            <a href="00_memo.html" class="post-item">
+            <div class="post-item">
                 <span class="tag memo">Memo</span>
-                <span class="title">새로운 Memo 기능이 추가되었습니다.</span>
+                <span class="title">게시판 정렬 및 Home 버튼 최적화가 완료되었습니다.</span>
                 <span class="date">2026-04-03</span>
-            </a>
+            </div>
         </div>
     </main>
 </body>
