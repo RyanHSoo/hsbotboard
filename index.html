@@ -6,7 +6,7 @@
     <title>Ryan's Archive</title>
     <style>
         :root {
-            --sidebar-color: #ebf2ff; /* 이미지와 동일한 연한 블루 */
+            --sidebar-color: #ebf2ff;
             --primary-blue: #2563eb;
             --text-dark: #1e293b;
         }
@@ -15,7 +15,8 @@
         
         /* [사이드바] */
         .sidebar { width: 260px; background-color: var(--sidebar-color); padding: 40px 20px; display: flex; flex-direction: column; border-right: 1px solid #e2e8f0; flex-shrink: 0; box-sizing: border-box; }
-        .sidebar-logo { text-decoration: none; color: var(--text-dark); font-size: 1.5rem; margin-bottom: 50px; padding-left: 10px; font-weight: 800; }
+        .sidebar-logo { text-decoration: none; color: var(--text-dark); font-size: 1.5rem; margin-bottom: 50px; padding-left: 10px; font-weight: 800; transition: color 0.2s; }
+        .sidebar-logo:hover { color: var(--primary-blue); }
         .nav-item { padding: 14px 18px; text-decoration: none; color: var(--text-dark); border-radius: 10px; margin-bottom: 8px; font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
         .nav-item:hover { background-color: rgba(255, 255, 255, 0.8); color: var(--primary-blue); }
 
@@ -32,7 +33,7 @@
 
         .section-title { font-size: 1.4rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
         
-        /* [게시판 형태 테이블] */
+        /* [게시판 테이블] */
         .board-table { width: 100%; border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; table-layout: fixed; }
         .board-table th { background-color: #f8fafc; padding: 15px 20px; text-align: left; border-bottom: 2px solid #e2e8f0; color: #64748b; font-size: 0.9rem; }
         .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
@@ -41,7 +42,6 @@
         .col-cat { width: 140px; font-weight: 700; color: var(--primary-blue); }
         .col-date { width: 110px; color: #94a3b8; }
         .col-title { color: #334155; font-weight: 500; }
-        .col-title a { text-decoration: none; color: inherit; }
 
         /* [모바일 최적화] */
         @media (max-width: 768px) {
@@ -51,7 +51,7 @@
             .nav-item { margin-bottom: 0; margin-right: 8px; padding: 10px 15px; font-size: 0.85rem; flex-shrink: 0; }
             .main-content { padding: 40px 20px; flex: none; }
             .header-section h1 { font-size: 1.8rem; }
-            .board-table th:nth-child(2), .board-table td:nth-child(2) { display: none; } /* 모바일에서 날짜 숨김 */
+            .board-table th:nth-child(2), .board-table td:nth-child(2) { display: none; }
             .col-cat { width: 100px; }
         }
     </style>
@@ -88,33 +88,22 @@
                     </tr>
                 </thead>
                 <tbody id="board-body">
-                    ) -->
                     </tbody>
             </table>
         </section>
     </main>
 
     <script>
-        // 실시간 검색 기능 로직
         function handleSearch() {
             const query = document.getElementById('main-search').value.toLowerCase();
             const rows = document.querySelectorAll('#board-body tr');
             const titleElement = document.getElementById('display-title');
             
-            if (query === "") {
-                titleElement.innerText = "✨ Recent Updates";
-            } else {
-                titleElement.innerText = "🔍 검색 결과";
-            }
+            titleElement.innerText = (query === "") ? "✨ Recent Updates" : "🔍 검색 결과";
 
             rows.forEach(row => {
                 const text = row.innerText.toLowerCase();
-                // 카테고리, 날짜, 제목 중 검색어 포함 여부 확인
-                if (text.includes(query)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
+                row.style.display = text.includes(query) ? "" : "none";
             });
         }
     </script>
