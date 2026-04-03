@@ -14,12 +14,45 @@
         
         body { font-family: -apple-system, sans-serif; margin: 0; display: flex; height: 100vh; background-color: white; overflow: hidden; }
         
-        /* [사이드바] - index와 동일한 디자인 */
-        .sidebar { width: 260px; background-color: var(--sidebar-color); padding: 40px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); flex-shrink: 0; box-sizing: border-box; }
-        .sidebar-logo { text-decoration: none; color: var(--text-dark); font-size: 1.5rem; margin-bottom: 50px; padding-left: 10px; font-weight: 800; }
-        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--text-dark); border-radius: 10px; margin-bottom: 8px; font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
+        /* [사이드바] - index.html과 소수점 단위까지 일치화 */
+        .sidebar { 
+            width: 260px; 
+            background-color: var(--sidebar-color); 
+            padding: 40px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            border-right: 1px solid var(--border-color); 
+            flex-shrink: 0; 
+            box-sizing: border-box; 
+        }
+        .sidebar-logo { 
+            text-decoration: none; 
+            color: var(--text-dark); 
+            font-size: 1.5rem; 
+            margin-bottom: 50px; 
+            padding-left: 10px; 
+            font-weight: 800; 
+            display: block; /* 위치 고정을 위해 block 설정 */
+        }
+        .nav-item { 
+            padding: 14px 18px; 
+            text-decoration: none; 
+            color: var(--text-dark); 
+            border-radius: 10px; 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            box-sizing: border-box;
+        }
         .nav-item:hover { background-color: rgba(255, 255, 255, 0.8); color: var(--primary-blue); }
-        .nav-active { background-color: rgba(255, 255, 255, 0.9); color: var(--primary-blue); border: 1px solid var(--border-color); }
+        .nav-active { 
+            background-color: rgba(255, 255, 255, 0.9); 
+            color: var(--primary-blue); 
+            border: 1px solid var(--border-color); 
+        }
 
         /* [본문 영역] */
         .main-content { flex: 1; padding: 60px 80px; overflow-y: auto; background: white; box-sizing: border-box; }
@@ -41,10 +74,7 @@
         .col-date { width: 110px; color: #64748b; }
         .col-title { color: #334155; font-weight: 600; }
 
-        /* 결과 없음 메시지 */
         #no-result-msg { display: none; text-align: center; padding: 50px; color: #94a3b8; font-size: 1rem; border: 1px dashed var(--border-color); border-radius: 12px; margin-top: 10px; }
-
-        /* 상세 아코디언 */
         .content-row { display: none; background-color: #fafafa; }
         .detail-box { padding: 30px; border-left: 4px solid var(--primary-blue); background: white; }
 
@@ -107,16 +137,13 @@
             const rows = document.querySelectorAll('#board-body tr:not(.content-row)');
             const total = Math.ceil(rows.length / pSize) || 1;
             if(curPage > total) curPage = total;
-
             const start = (curPage - 1) * pSize;
             const end = start + pSize;
-
             rows.forEach((row, i) => {
                 row.style.display = (i >= start && i < end) ? "" : "none";
                 const nextRow = row.nextElementSibling;
                 if(nextRow && nextRow.classList.contains('content-row')) nextRow.style.display = 'none';
             });
-
             document.getElementById('page-info').innerText = `${curPage} / ${total}`;
             document.getElementById('prev-btn').disabled = (curPage === 1);
             document.getElementById('next-btn').disabled = (curPage === total);
@@ -139,35 +166,18 @@
             const pg = document.getElementById('pagination-controls');
             const noRes = document.getElementById('no-result-msg');
             const table = document.getElementById('data-table');
-
-            if(q === "") {
-                pg.style.display = 'flex';
-                noRes.style.display = 'none';
-                table.style.display = 'table';
-                render();
-                return;
-            }
-
-            // 검색 실행 시 페이징 버튼은 자연스럽게 숨김
+            if(q === "") { pg.style.display = 'flex'; noRes.style.display = 'none'; table.style.display = 'table'; render(); return; }
             pg.style.display = 'none';
             let matchCount = 0;
-
             rows.forEach(row => {
                 const isMatch = row.innerText.toLowerCase().includes(q);
                 row.style.display = isMatch ? "" : "none";
                 if(isMatch) matchCount++;
-                
                 const nextRow = row.nextElementSibling;
                 if(nextRow && nextRow.classList.contains('content-row')) nextRow.style.display = 'none';
             });
-
-            if(matchCount === 0) {
-                table.style.display = 'none';
-                noRes.style.display = 'block';
-            } else {
-                table.style.display = 'table';
-                noRes.style.display = 'none';
-            }
+            if(matchCount === 0) { table.style.display = 'none'; noRes.style.display = 'block'; } 
+            else { table.style.display = 'table'; noRes.style.display = 'none'; }
         }
 
         window.addEventListener('load', render);
