@@ -6,94 +6,117 @@
     <title>Ryan's Archive</title>
     <style>
         :root {
-            --sidebar-color: #ebf2ff; /* 이미지 속의 연한 블루 파스텔 톤 */
+            --sidebar-color: #ebf2ff; /* 이미지와 동일한 연한 블루 */
             --primary-blue: #2563eb;
             --text-dark: #1e293b;
-            --text-gray: #64748b;
         }
         
         body { font-family: -apple-system, sans-serif; margin: 0; display: flex; height: 100vh; background-color: white; overflow: hidden; }
         
-        /* [PC] 사이드바 디자인 */
-        .sidebar {
-            width: 260px;
-            background-color: var(--sidebar-color);
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #e2e8f0;
-            flex-shrink: 0;
-        }
-        .sidebar h2 { color: var(--text-dark); font-size: 1.5rem; margin-bottom: 50px; padding-left: 10px; font-weight: 800; }
-        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--text-dark); border-radius: 10px; margin-bottom: 8px; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
-        .nav-item:hover { background-color: rgba(255, 255, 255, 0.8); color: var(--primary-blue); transform: translateX(5px); }
+        /* [사이드바] */
+        .sidebar { width: 260px; background-color: var(--sidebar-color); padding: 40px 20px; display: flex; flex-direction: column; border-right: 1px solid #e2e8f0; flex-shrink: 0; box-sizing: border-box; }
+        .sidebar-logo { text-decoration: none; color: var(--text-dark); font-size: 1.5rem; margin-bottom: 50px; padding-left: 10px; font-weight: 800; }
+        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--text-dark); border-radius: 10px; margin-bottom: 8px; font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
+        .nav-item:hover { background-color: rgba(255, 255, 255, 0.8); color: var(--primary-blue); }
 
-        /* [PC] 본문 디자인 */
-        .main-content { flex: 1; padding: 60px 80px; overflow-y: auto; background: white; }
-        .header-section { margin-bottom: 50px; }
-        .header-section h1 { font-size: 2.8rem; font-weight: 800; margin: 0 0 15px 0; color: #0f172a; letter-spacing: -1.5px; }
+        /* [본문 영역] */
+        .main-content { flex: 1; padding: 60px 80px; overflow-y: auto; background: white; box-sizing: border-box; }
+        .header-section { margin-bottom: 40px; }
+        .header-section h1 { font-size: 2.8rem; font-weight: 800; margin: 0 0 15px 0; color: #0f172a; }
         .slogan { border-left: 4px solid var(--primary-blue); padding-left: 15px; font-style: italic; color: #94a3b8; font-size: 1.1rem; }
         
-        .search-container { max-width: 800px; margin-bottom: 60px; position: relative; }
-        .search-input { width: 100%; padding: 16px 25px; border-radius: 35px; border: 1px solid #e2e8f0; background-color: #f8fafc; outline: none; font-size: 1rem; transition: 0.3s; box-sizing: border-box; }
+        /* [검색창] */
+        .search-container { max-width: 800px; margin-bottom: 50px; }
+        .search-input { width: 100%; padding: 16px 25px; border-radius: 35px; border: 1px solid #e2e8f0; background-color: #f8fafc; outline: none; font-size: 1rem; box-sizing: border-box; }
         .search-input:focus { border-color: var(--primary-blue); background-color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 
         .section-title { font-size: 1.4rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
         
-        /* Recent Updates 게시판 표 */
-        .update-table { width: 100%; border-collapse: collapse; border-radius: 15px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-        .update-table td { padding: 20px; border-bottom: 1px solid #f1f5f9; font-size: 1rem; }
-        .update-table tr:hover { background-color: #fcfdfe; }
-        .update-table tr:last-child td { border-bottom: none; }
-        .col-tag { width: 140px; font-weight: 700; color: var(--primary-blue); }
-        .col-date { width: 120px; color: var(--text-gray); font-size: 0.9rem; }
-        .col-title { font-weight: 500; color: #334155; }
+        /* [게시판 형태 테이블] */
+        .board-table { width: 100%; border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; table-layout: fixed; }
+        .board-table th { background-color: #f8fafc; padding: 15px 20px; text-align: left; border-bottom: 2px solid #e2e8f0; color: #64748b; font-size: 0.9rem; }
+        .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        .board-table tr:hover { background-color: #fcfdfe; }
+        
+        .col-cat { width: 140px; font-weight: 700; color: var(--primary-blue); }
+        .col-date { width: 110px; color: #94a3b8; }
+        .col-title { color: #334155; font-weight: 500; }
+        .col-title a { text-decoration: none; color: inherit; }
 
-        /* [모바일] 최적화 레이아웃 (768px 이하) */
+        /* [모바일 최적화] */
         @media (max-width: 768px) {
             body { flex-direction: column; overflow: auto; }
-            .sidebar { 
-                width: 100%; height: auto; padding: 15px; border-right: none; 
-                border-bottom: 1px solid #e2e8f0; flex-direction: row; 
-                overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;
-            }
-            .sidebar h2 { display: none; } /* 모바일에서는 로고 숨김 */
-            .nav-item { margin-bottom: 0; margin-right: 10px; padding: 10px 15px; font-size: 0.9rem; flex-shrink: 0; }
+            .sidebar { width: 100%; height: auto; padding: 15px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .sidebar-logo { display: none; }
+            .nav-item { margin-bottom: 0; margin-right: 8px; padding: 10px 15px; font-size: 0.85rem; flex-shrink: 0; }
             .main-content { padding: 40px 20px; flex: none; }
-            .header-section h1 { font-size: 1.8rem; letter-spacing: -1px; }
-            .slogan { font-size: 0.95rem; }
-            .search-input { padding: 12px 20px; }
-            .col-tag { width: 100px; font-size: 0.85rem; }
-            .col-date { display: none; } /* 모바일에서 날짜 숨김 (선택 사항) */
+            .header-section h1 { font-size: 1.8rem; }
+            .board-table th:nth-child(2), .board-table td:nth-child(2) { display: none; } /* 모바일에서 날짜 숨김 */
+            .col-cat { width: 100px; }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Ryan's Archive</h2>
+    <nav class="sidebar">
+        <a href="index.html" class="sidebar-logo">Ryan's Archive</a>
         <a href="memo.html" class="nav-item">📝 Memo</a>
         <a href="01_daily_news.html" class="nav-item">📰 01 Daily News</a>
         <a href="02_mckinsey_report.html" class="nav-item">📈 02 McKinsey Report</a>
         <a href="03_ai_learning.html" class="nav-item">🤖 03 AI Learning</a>
         <a href="04_finance.html" class="nav-item">💰 04 Finance</a>
         <a href="05_humanities.html" class="nav-item">📖 05 Humanities</a>
-    </div>
+    </nav>
 
-    <div class="main-content">
-        <div class="header-section">
+    <main class="main-content">
+        <header class="header-section">
             <h1>Welcome to Ryan's Private Archive</h1>
             <div class="slogan">"Where Knowledge Meets Innovation"</div>
-        </div>
+        </header>
 
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="전체 아카이브 검색...">
-        </div>
+        <section class="search-container">
+            <input type="text" id="main-search" class="search-input" placeholder="전체 아카이브 검색..." onkeyup="handleSearch()">
+        </section>
 
-        <div class="section-title">✨ Recent Updates</div>
-        <table class="update-table">
-            <tbody id="recent-list">
-                </tbody>
-        </table>
-    </div>
+        <section id="updates-section">
+            <div class="section-title" id="display-title">✨ Recent Updates</div>
+            <table class="board-table">
+                <thead>
+                    <tr>
+                        <th class="col-cat">카테고리</th>
+                        <th class="col-date">날짜</th>
+                        <th class="col-title">제목</th>
+                    </tr>
+                </thead>
+                <tbody id="board-body">
+                    ) -->
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        // 실시간 검색 기능 로직
+        function handleSearch() {
+            const query = document.getElementById('main-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#board-body tr');
+            const titleElement = document.getElementById('display-title');
+            
+            if (query === "") {
+                titleElement.innerText = "✨ Recent Updates";
+            } else {
+                titleElement.innerText = "🔍 검색 결과";
+            }
+
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                // 카테고리, 날짜, 제목 중 검색어 포함 여부 확인
+                if (text.includes(query)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
