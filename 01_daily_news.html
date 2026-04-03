@@ -2,60 +2,29 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>01 Daily News - Ryan's Archive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 Daily News</title>
     <style>
-        :root { --sidebar-color: #ebf2ff; --primary: #2563eb; --dark: #1e293b; --border: #e2e8f0; }
+        :root { --sidebar-bg: #ebf2ff; --primary: #2563eb; --dark: #1e293b; --border: #e2e8f0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, sans-serif; margin: 0; background-color: white; display: flex; height: 100vh; overflow: hidden; }
+        body { font-family: -apple-system, sans-serif; display: flex; height: 100vh; overflow: hidden; }
 
-        /* [사이드바 - index.html과 100% 동일 박제] */
-        .sidebar { 
-            position: fixed; left: 0; top: 0; width: 260px; height: 100vh; 
-            background: var(--sidebar-color); border-right: 1px solid var(--border);
-            display: flex; flex-direction: column; z-index: 9999;
-        }
-        .sidebar-logo { 
-            display: block; text-decoration: none; color: var(--dark); 
-            font-size: 24px; font-weight: 800; line-height: 1.2;
-            margin: 40px 0 50px 30px;
-        }
-        .nav-item { 
-            display: flex; align-items: center; gap: 10px; padding: 14px 18px; 
-            margin: 0 20px 8px 20px; text-decoration: none; color: var(--dark); 
-            font-weight: 500; border-radius: 10px; transition: 0.2s;
-        }
-        .nav-item:hover { background: rgba(255, 255, 255, 0.8); color: var(--primary); }
-        .nav-active { background: rgba(255, 255, 255, 0.9); color: var(--primary); border: 1px solid var(--border); }
+        .sidebar { width: 260px; background: var(--sidebar-bg); height: 100vh; position: fixed; left: 0; top: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 1000; }
+        .sidebar-logo { display: block; text-decoration: none; color: var(--dark); font-size: 24px; font-weight: 800; margin: 40px 0 50px 30px; line-height: 1; }
+        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--dark); border-radius: 10px; margin: 0 20px 8px 20px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .nav-active { background: white; color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .nav-divider { height: 1px; background: rgba(30, 41, 59, 0.1); margin: 10px 30px 15px 30px; }
 
-        /* [본문 영역 - 사이드바 너비만큼 마진 고정] */
         .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; height: 100vh; overflow-y: auto; background: white; }
-        h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; border-left: 5px solid var(--primary); padding-left: 15px; color: #0f172a; line-height: 1.2; }
-        .search-container { max-width: 500px; margin-bottom: 30px; }
-        .search-input { width: 100%; padding: 14px 22px; border-radius: 30px; border: 1px solid var(--border); background: #f8fafc; outline: none; font-size: 1rem; }
-
-        .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; table-layout: fixed; margin-bottom: 20px; }
-        .board-table th { background: #f8fafc; padding: 15px 20px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 0.85rem; font-weight: 700; }
-        .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; cursor: pointer; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        h1 { font-size: 35px; font-weight: 800; margin-bottom: 25px; border-left: 5px solid var(--primary); padding-left: 15px; }
         
-        .col-no { width: 60px; text-align: center; color: #94a3b8; }
-        .col-date { width: 110px; color: #64748b; }
-        .content-row { display: none; background: #fafafa; }
-        .detail-box { padding: 30px; border-left: 4px solid var(--primary); background: white; }
-        #no-result-msg { display: none; text-align: center; padding: 50px; color: #94a3b8; font-size: 1rem; border: 1px dashed var(--border); border-radius: 12px; margin-top: 10px; }
-
-        .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px; padding-bottom: 60px; }
-        .page-btn { padding: 10px 25px; border: 1px solid var(--primary); background: white; color: var(--primary); border-radius: 8px; font-weight: 600; cursor: pointer; }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; overflow: auto; }
-            .sidebar { position: relative; width: 100%; height: auto; padding: 10px; flex-direction: row; overflow-x: auto; border-bottom: 1px solid var(--border); }
-            .sidebar-logo, .nav-divider { display: none; }
-            .nav-item { margin: 0 8px 0 0; padding: 10px 15px; flex-shrink: 0; }
-            .main-content { margin-left: 0; padding: 30px 20px; flex: none; height: auto; }
-            .col-no { display: none; }
-        }
+        .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); table-layout: fixed; }
+        .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 14px; }
+        .board-table td { padding: 15px; border-bottom: 1px solid #f1f5f9; font-size: 15px; }
+        
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; padding-bottom: 50px; }
+        .page-btn { padding: 8px 20px; border: 1px solid var(--primary); background: white; color: var(--primary); border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .page-btn:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -71,60 +40,30 @@
     </nav>
     <main class="main-content">
         <h1>01 Daily News</h1>
-        <div class="search-container"><input type="text" id="local-search" class="search-input" placeholder="검색 (Enter)..." onkeypress="if(event.keyCode==13){filterBoard();}"></div>
-        <table class="board-table" id="data-table">
-            <thead><tr><th class="col-no">No</th><th class="col-date">날짜</th><th>제목</th></tr></thead>
+        <table class="board-table">
+            <thead><tr><th style="width:60px;">No</th><th style="width:120px;">날짜</th><th>제목</th></tr></thead>
             <tbody id="board-body"></tbody>
         </table>
-        <div id="no-result-msg">검색 결과가 없습니다. 🔍</div>
-        <div class="pagination" id="pagination-controls">
-            <button class="page-btn" id="prev-btn" onclick="changePage(-1)">이전</button>
-            <span id="page-info">1 / 1</span>
-            <button class="page-btn" id="next-btn" onclick="changePage(1)">다음</button>
+        <div class="pagination">
+            <button class="page-btn" id="prevBtn" onclick="movePage(-1)">이전</button>
+            <span id="pageInfo">1 / 1</span>
+            <button class="page-btn" id="nextBtn" onclick="movePage(1)">다음</button>
         </div>
     </main>
     <script>
-        let curPage = 1; let pSize = 20;
-        function render() {
+        let curPage = 1; const perPage = 20;
+        function update() {
             const rows = document.querySelectorAll('#board-body tr:not(.content-row)');
-            const total = Math.ceil(rows.length / pSize) || 1;
-            const start = (curPage - 1) * pSize; const end = start + pSize;
-            rows.forEach((row, i) => {
-                row.style.display = (i >= start && i < end) ? "" : "none";
-                const nextRow = row.nextElementSibling;
-                if(nextRow && nextRow.classList.contains('content-row')) nextRow.style.display = 'none';
-            });
-            document.getElementById('page-info').innerText = `${curPage} / ${total}`;
-            document.getElementById('prev-btn').disabled = (curPage === 1);
-            document.getElementById('next-btn').disabled = (curPage === total);
+            const totalPages = Math.max(Math.ceil(rows.length / perPage), 1);
+            if (curPage < 1) curPage = 1;
+            if (curPage > totalPages) curPage = totalPages;
+            rows.forEach((r, i) => { r.style.display = (i >= (curPage-1)*perPage && i < curPage*perPage) ? "" : "none"; });
+            document.getElementById('pageInfo').innerText = `${curPage} / ${totalPages}`;
+            document.getElementById('prevBtn').disabled = (curPage === 1);
+            document.getElementById('nextBtn').disabled = (curPage === totalPages);
         }
-        function changePage(s) { curPage += s; render(); }
-        function toggleContent(id) {
-            const row = document.getElementById(id);
-            const isVisible = row.style.display === 'table-row';
-            document.querySelectorAll('.content-row').forEach(r => r.style.display = 'none');
-            if (!isVisible) row.style.display = 'table-row';
-        }
-        function filterBoard() {
-            const q = document.getElementById('local-search').value.toLowerCase();
-            const rows = document.querySelectorAll('#board-body tr:not(.content-row)');
-            const pg = document.getElementById('pagination-controls');
-            const noRes = document.getElementById('no-result-msg');
-            const table = document.getElementById('data-table');
-            if(q === "") { pg.style.display='flex'; noRes.style.display='none'; table.style.display='table'; render(); return; }
-            pg.style.display='none';
-            let matchCount = 0;
-            rows.forEach(row => {
-                const isMatch = row.innerText.toLowerCase().includes(q);
-                row.style.display = isMatch ? "" : "none";
-                if(isMatch) matchCount++;
-                const nextRow = row.nextElementSibling;
-                if(nextRow && nextRow.classList.contains('content-row')) nextRow.style.display = 'none';
-            });
-            table.style.display = matchCount === 0 ? 'none' : 'table';
-            noRes.style.display = matchCount === 0 ? 'block' : 'none';
-        }
-        window.onload = render;
+        function movePage(step) { curPage += step; update(); }
+        window.onload = update;
     </script>
 </body>
 </html>
