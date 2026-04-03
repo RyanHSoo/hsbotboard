@@ -9,38 +9,39 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: -apple-system, sans-serif; display: flex; min-height: 100vh; background: white; }
 
-        /* [사이드바 - 고정] */
+        /* [사이드바 - 절대 고정] */
         .sidebar { width: 260px; background: var(--sidebar-bg); height: 100vh; position: fixed; left: 0; top: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 9999; }
         .sidebar-logo { display: block; text-decoration: none; color: var(--dark); font-size: 24px; font-weight: 800; margin: 40px 0 50px 30px; line-height: 1.2; }
         .nav-item { padding: 14px 18px; text-decoration: none; color: var(--dark); border-radius: 10px; margin: 0 20px 8px 20px; font-weight: 500; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
         .nav-item:hover { background: rgba(255, 255, 255, 0.8); color: var(--primary); }
         .nav-divider { height: 1px; background: rgba(30, 41, 59, 0.1); margin: 10px 30px 15px 30px; }
 
-        /* [본문 - 마진 고정] */
+        /* [본문 영역 - 마진 고정] */
         .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; background: white; min-width: 0; }
         .header-section { margin-bottom: 40px; }
         .header-section h1 { font-size: 40px; font-weight: 800; color: #0f172a; margin-bottom: 10px; }
         .slogan { border-left: 4px solid var(--primary); padding-left: 15px; font-style: italic; color: #94a3b8; font-size: 18px; }
 
-        .search-container { max-width: 800px; margin: 40px 0; }
+        .search-container { max-width: 800px; margin: 40px 0 30px 0; }
         .search-input { width: 100%; padding: 16px 25px; border-radius: 35px; border: 1px solid var(--border); background: #f8fafc; outline: none; font-size: 16px; }
 
-        /* [테이블 - 칸 너비 최적화 및 클릭 스타일] */
+        /* [Recent Updates 문구 스타일] */
+        .recent-title { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .recent-title::before { content: ""; width: 4px; height: 18px; background: var(--primary); border-radius: 2px; }
+
+        /* [테이블 - 클릭 스타일] */
         .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); table-layout: fixed; }
         .board-table th:nth-child(1) { width: 180px; } 
         .board-table th:nth-child(2) { width: 120px; } 
         .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 14px; }
         
-        /* 클릭 가능한 행 스타일 */
-        .board-table tbody tr { cursor: pointer; transition: background 0.2s; }
-        .board-table tbody tr:hover { background: #f8fafc; }
-        
+        .board-table tbody tr { cursor: pointer; transition: background 0.15s; }
+        .board-table tbody tr:hover { background: #f1f5f9; }
         .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         #no-result-msg { display: none; text-align: center; padding: 50px; color: #94a3b8; border: 1px dashed var(--border); border-radius: 12px; margin-top: 10px; }
         .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; padding-bottom: 60px; }
         .page-btn { padding: 10px 25px; border: 1px solid var(--primary); background: white; color: var(--primary); border-radius: 8px; font-weight: 600; cursor: pointer; }
-        .page-btn:disabled { border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; }
 
         @media (max-width: 768px) {
             body { flex-direction: column; }
@@ -72,17 +73,19 @@
             <input type="text" id="common-search" class="search-input" placeholder="전체 검색 (Enter)..." onkeypress="if(event.keyCode==13){handleSearch();}">
         </div>
 
+        <div class="recent-title">Recent Updates</div>
+
         <table class="board-table" id="data-table">
             <thead>
                 <tr><th style="width:180px;">카테고리</th><th style="width:120px;">날짜</th><th>제목</th></tr>
             </thead>
             <tbody id="board-body">
-                <tr onclick="location.href='01_daily_news.html'">
+                <tr data-target="01_daily_news.html">
                     <td>Daily News</td>
                     <td>2026.04.04</td>
                     <td>[브리핑] 미 증시 혼조 및 반도체 섹터 강세</td>
                 </tr>
-                <tr onclick="location.href='02_mckinsey_report.html'">
+                <tr data-target="02_mckinsey_report.html">
                     <td>McKinsey Report</td>
                     <td>2026.04.04</td>
                     <td>글로벌 반도체 시장 전망 보고서 요약</td>
@@ -109,6 +112,14 @@
             const d = String(date.getDate()).padStart(2, '0');
             return `${y}.${m}.${d}`;
         }
+
+        // 클릭 이벤트 감지 및 이동 (01_daily_news.html 등 파일로 연결)
+        document.getElementById('board-body').addEventListener('click', function(e) {
+            const row = e.target.closest('tr');
+            if (row && row.dataset.target) {
+                window.location.href = row.dataset.target;
+            }
+        });
 
         function update() {
             const allRows = Array.from(document.querySelectorAll('#board-body tr'));
