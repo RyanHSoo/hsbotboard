@@ -9,7 +9,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: -apple-system, sans-serif; display: flex; min-height: 100vh; background: white; }
 
-        /* [사이드바 - index와 완전 동일] */
+        /* [사이드바 - 절대 고정] */
         .sidebar { width: 260px; background: var(--sidebar-bg); height: 100vh; position: fixed; left: 0; top: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 9999; }
         .sidebar-logo { display: block; text-decoration: none; color: var(--dark); font-size: 24px; font-weight: 800; margin: 40px 0 50px 30px; line-height: 1.2; }
         .nav-item { padding: 14px 18px; text-decoration: none; color: var(--dark); border-radius: 10px; margin: 0 20px 8px 20px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
@@ -22,9 +22,13 @@
         .search-container { max-width: 500px; margin-bottom: 30px; }
         .search-input { width: 100%; padding: 14px 22px; border-radius: 30px; border: 1px solid var(--border); background: #f8fafc; outline: none; font-size: 16px; }
         
+        /* [테이블 너비 최적화] */
         .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); table-layout: fixed; }
+        .board-table th:nth-child(1) { width: 85px; text-align: center; } /* No. 5자리수 완벽 대응 */
+        .board-table th:nth-child(2) { width: 130px; }                  /* 날짜 너비 확장 */
         .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 14px; }
         .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 15px; cursor: pointer; }
+        .board-table td:nth-child(1) { text-align: center; font-weight: 600; color: #64748b; }
 
         .content-row { display: none; background: #fcfcfc; }
         .detail-box { padding: 30px; border-left: 4px solid var(--primary); background: white; }
@@ -63,13 +67,13 @@
         <table class="board-table" id="data-table">
             <thead>
                 <tr id="table-header">
-                    <th style="width:60px;">No</th>
-                    <th style="width:120px;">날짜</th>
+                    <th style="width:85px; text-align:center;">No</th>
+                    <th style="width:130px;">날짜</th>
                     <th>제목</th>
                 </tr>
             </thead>
             <tbody id="board-body">
-                <tr onclick="toggle('row-1')"><td></td><td>2026.04.04</td><td>[브리핑] 미 증시 혼조 및 반도체 섹터 강세</td></tr>
+                <tr onclick="toggle('row-1')"><td>1</td><td>2026.04.04</td><td>[브리핑] 미 증시 혼조 및 반도체 섹터 강세</td></tr>
                 <tr class="content-row" id="row-1"><td colspan="3"><div class="detail-box">상세 내용...</div></td></tr>
             </tbody>
         </table>
@@ -93,7 +97,7 @@
             const total = Math.max(Math.ceil(titleRows.length / perPage), 1);
             if (curPage < 1) curPage = 1; if (curPage > total) curPage = total;
 
-            document.getElementById('table-header').innerHTML = '<th style="width:60px;">No</th><th style="width:120px;">날짜</th><th>제목</th>';
+            document.getElementById('table-header').innerHTML = '<th style="width:85px; text-align:center;">No</th><th style="width:130px;">날짜</th><th>제목</th>';
 
             titleRows.forEach((r, i) => {
                 const isVisible = i >= (curPage - 1) * perPage && i < curPage * perPage;
@@ -118,7 +122,7 @@
             if (q === "") { update(); return; }
 
             document.getElementById('pg-box').style.display = 'none';
-            document.getElementById('table-header').innerHTML = '<th style="width:120px;">날짜</th><th>제목</th>';
+            document.getElementById('table-header').innerHTML = '<th style="width:130px;">날짜</th><th>제목</th>';
 
             let matchCount = 0;
             titleRows.forEach(r => {
