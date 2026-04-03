@@ -6,9 +6,9 @@
     <title>Ryan's Archive</title>
     <style>
         :root { --sidebar-color: #ebf2ff; --primary-blue: #2563eb; --text-dark: #1e293b; --border-color: #e2e8f0; }
-        body { font-family: -apple-system, sans-serif; margin: 0; background-color: white; display: flex; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; margin: 0; display: flex; height: 100vh; background-color: white; overflow: hidden; }
         
-        /* [사이드바 - 절대 고정] */
+        /* [사이드바] - 절대 좌표 고정 */
         .sidebar { 
             width: 260px; background-color: var(--sidebar-color); height: 100vh; 
             position: fixed; left: 0; top: 0; border-right: 1px solid var(--border-color);
@@ -27,7 +27,7 @@
         .nav-divider { height: 1px; background-color: rgba(30, 41, 59, 0.1); margin: 10px 30px 15px 30px; }
 
         /* [본문 영역] */
-        .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; min-height: 100vh; background: white; box-sizing: border-box; }
+        .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; height: 100vh; overflow-y: auto; background: white; box-sizing: border-box; }
         .header-section { margin-bottom: 40px; }
         .header-section h1 { font-size: 2.8rem; font-weight: 800; margin: 0 0 15px 0; color: #0f172a; }
         .slogan { border-left: 4px solid var(--primary-blue); padding-left: 15px; font-style: italic; color: #94a3b8; font-size: 1.1rem; }
@@ -53,9 +53,7 @@
             .sidebar { position: relative; width: 100%; height: auto; padding: 10px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
             .sidebar-logo, .nav-divider { display: none; }
             .nav-item { margin: 0 8px 0 0; padding: 10px 15px; font-size: 0.85rem; flex-shrink: 0; }
-            .main-content { margin-left: 0; padding: 40px 20px; flex: none; }
-            .header-section h1 { font-size: 1.8rem; }
-            .col-date { display: none; }
+            .main-content { margin-left: 0; padding: 40px 20px; flex: none; height: auto; }
         }
     </style>
 </head>
