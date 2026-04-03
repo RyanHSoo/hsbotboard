@@ -7,12 +7,15 @@
         * { box-sizing: border-box; }
         body { margin: 0; font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
         .sidebar { width: 260px; background-color: #ebf4ff; border-right: 1px solid #d1e3f8; padding: 40px 20px; display: flex; flex-direction: column; }
-        .sidebar h2 { color: #2c3e50; font-size: 1.2em; margin-bottom: 30px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; font-weight: 700; }
+        .logo-link { text-decoration: none; color: #2c3e50; }
+        .sidebar h2 { font-size: 1.25em; margin-bottom: 30px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; font-weight: 800; transition: 0.2s; }
+        .sidebar h2:hover { color: #1a73e8; }
         .nav-menu { list-style: none; padding: 0; margin: 0; }
         .nav-menu li { margin-bottom: 8px; }
         .nav-menu a { text-decoration: none; color: #4a5568; font-size: 0.9em; display: block; padding: 12px 15px; border-radius: 8px; transition: 0.2s; }
         .nav-menu a:hover { background-color: #dbeafe; color: #1a73e8; font-weight: 600; }
         .nav-menu a.active { background-color: #ffffff; color: #1a73e8; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .divider { height: 1px; background-color: #d1e3f8; margin: 15px 5px; opacity: 0.8; }
         .main-content { flex: 1; background-color: #ffffff; padding: 60px 80px; overflow-y: auto; }
         h1 { font-size: 2.1em; color: #1a202c; margin-bottom: 35px; border-bottom: 3px solid #ebf4ff; padding-bottom: 15px; }
         .table-board { width: 100%; border-collapse: collapse; }
@@ -25,12 +28,14 @@
 </head>
 <body>
     <nav class="sidebar">
-        <h2>Ryan's Archive</h2>
+        <a href="index.html" class="logo-link"><h2>Ryan's Archive</h2></a>
         <ul class="nav-menu">
             <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="00_memo.html">📝 Memo</a></li>
+            <div class="divider"></div>
             <li><a href="01_daily_news.html" class="active">📰 01 Daily News</a></li>
             <li><a href="02_mckinsey_report.html">📈 02 McKinsey Report</a></li>
-            <li><a href="03_ai_daily.html">🤖 03 AI Learning</a></li>
+            <li><a href="03_ai_learning.html">🤖 03 AI Learning</a></li>
             <li><a href="04_finance.html">💰 04 Finance</a></li>
             <li><a href="05_humanities.html">📖 05 Humanities</a></li>
         </ul>
@@ -42,7 +47,7 @@
                 <tr><th class="no">No</th><th class="date">Date</th><th>Title</th></tr>
             </thead>
             <tbody>
-                <tr><td class="no">001</td><td class="date">2026-04-03</td><td><a href="#" class="title-link">Daily News 게시판이 활성화되었습니다.</a></td></tr>
+                <tr><td class="no">001</td><td class="date">2026-04-03</td><td><a href="#" class="title-link">Daily News 아카이브가 생성되었습니다.</a></td></tr>
             </tbody>
         </table>
     </main>
