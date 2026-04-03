@@ -6,9 +6,9 @@
     <title>01 Daily News - Ryan's Archive</title>
     <style>
         :root { --sidebar-color: #ebf2ff; --primary-blue: #2563eb; --text-dark: #1e293b; --border-color: #e2e8f0; }
-        body { font-family: -apple-system, sans-serif; margin: 0; background-color: white; display: flex; }
+        body { font-family: -apple-system, sans-serif; margin: 0; display: flex; height: 100vh; background-color: white; overflow: hidden; }
         
-        /* [사이드바 - index.html과 수치 100% 일치] */
+        /* [사이드바] - index.html과 100% 동일 고정 */
         .sidebar { 
             width: 260px; background-color: var(--sidebar-color); height: 100vh; 
             position: fixed; left: 0; top: 0; border-right: 1px solid var(--border-color);
@@ -28,7 +28,7 @@
         .nav-divider { height: 1px; background-color: rgba(30, 41, 59, 0.1); margin: 10px 30px 15px 30px; }
 
         /* [본문 영역] */
-        .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; min-height: 100vh; background: white; box-sizing: border-box; }
+        .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; height: 100vh; overflow-y: auto; background: white; box-sizing: border-box; }
         h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 25px 0; border-left: 5px solid var(--primary-blue); padding-left: 15px; color: #0f172a; }
         .search-container { max-width: 500px; margin-bottom: 30px; }
         .search-input { width: 100%; padding: 14px 22px; border-radius: 30px; border: 1px solid var(--border-color); background-color: #f8fafc; outline: none; font-size: 1rem; box-sizing: border-box; }
@@ -51,7 +51,7 @@
             .sidebar { position: relative; width: 100%; height: auto; padding: 10px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
             .sidebar-logo, .nav-divider { display: none; }
             .nav-item { margin: 0 8px 0 0; padding: 10px 15px; font-size: 0.85rem; flex-shrink: 0; }
-            .main-content { margin-left: 0; padding: 30px 20px; flex: none; }
+            .main-content { margin-left: 0; padding: 30px 20px; flex: none; height: auto; }
             h1 { font-size: 1.6rem; }
         }
     </style>
