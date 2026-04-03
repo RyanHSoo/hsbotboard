@@ -8,7 +8,7 @@
         * { box-sizing: border-box; }
         body { margin: 0; font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
         .sidebar { width: 260px; background-color: #ebf4ff; border-right: 1px solid #d1e3f8; padding: 40px 20px; display: flex; flex-direction: column; }
-        .sidebar h2 { color: #2c3e50; font-size: 1.1em; margin-bottom: 30px; letter-spacing: 1px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; }
+        .sidebar h2 { color: #2c3e50; font-size: 1.1em; margin-bottom: 30px; border-bottom: 1px solid #cfdff2; padding-bottom: 10px; }
         .nav-menu { list-style: none; padding: 0; margin: 0; }
         .nav-menu li { margin-bottom: 8px; }
         .nav-menu a { text-decoration: none; color: #4a5568; font-size: 0.9em; display: block; padding: 12px 15px; border-radius: 8px; transition: 0.2s; }
@@ -18,16 +18,15 @@
         .welcome-section { margin-bottom: 60px; }
         .welcome-section h1 { font-size: 2.4em; color: #1a202c; margin: 0; font-weight: 800; }
         .welcome-section p { color: #718096; font-size: 1.15em; margin-top: 15px; font-style: italic; border-left: 4px solid #1a73e8; padding-left: 20px; }
-        .section-title { font-size: 1.3em; font-weight: 700; color: #2d3748; margin-bottom: 25px; display: flex; align-items: center; }
-        .post-item { display: flex; align-items: center; padding: 16px 10px; border-bottom: 1px solid #f0f4f8; text-decoration: none; color: #2d3748; transition: 0.2s; }
-        .post-item:hover { background-color: #f8fafc; transform: translateX(5px); }
-        .tag { padding: 4px 10px; border-radius: 4px; font-size: 0.7em; font-weight: 700; margin-right: 20px; min-width: 100px; text-align: center; }
+        .section-title { font-size: 1.3em; font-weight: 700; color: #2d3748; margin-bottom: 25px; }
+        .post-item { display: flex; align-items: center; padding: 16px 10px; border-bottom: 1px solid #f0f4f8; text-decoration: none; color: #2d3748; }
+        .tag { padding: 4px 10px; border-radius: 4px; font-size: 0.75em; font-weight: 700; margin-right: 20px; min-width: 110px; text-align: center; }
         .tag.news { background-color: #edf2f7; color: #4a5568; }
         .tag.mckinsey { background-color: #e0e7ff; color: #4338ca; }
         .tag.ai { background-color: #faf5ff; color: #6b46c1; }
         .tag.finance { background-color: #f0fff4; color: #22543d; }
-        .tag.humanities { background-color: #fffaf0; color: #744210; }
-        .title { flex-grow: 1; font-size: 1em; }
+        .tag.human { background-color: #fffaf0; color: #744210; }
+        .title { flex-grow: 1; font-weight: 500; }
         .date { color: #a0aec0; font-size: 0.85em; width: 100px; text-align: right; }
     </style>
 </head>
@@ -50,9 +49,9 @@
         </section>
         <div class="section-title">✨ Recent Updates</div>
         <div id="board-list">
-            <a href="01_daily_news.html" class="post-item">
+            <a href="#" class="post-item">
                 <span class="tag news">Daily News</span>
-                <span class="title">Welcome! 사이트 구축이 완료되었습니다.</span>
+                <span class="title">게시판 구축이 완료되었습니다.</span>
                 <span class="date">2026-04-03</span>
             </a>
         </div>
