@@ -5,47 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ryan's Archive</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
-        
-        /* 사이드바 (PC용) */
-        .sidebar { width: 260px; background: white; border-right: 1px solid #e2e8f0; padding: 30px 20px; display: flex; flex-direction: column; z-index: 100; }
-        .sidebar h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 40px; letter-spacing: -1px; }
-        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--text); border-radius: 10px; margin-bottom: 8px; font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 12px; }
+        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; --border: #e2e8f0; }
+        body { font-family: -apple-system, sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
+        .sidebar { width: 240px; background: white; border-right: 1px solid var(--border); padding: 25px 15px; flex-shrink: 0; display: flex; flex-direction: column; }
+        .sidebar h2 { color: var(--primary); font-size: 1.3rem; margin-bottom: 30px; padding-left: 10px; }
+        .nav-item { padding: 12px 15px; text-decoration: none; color: var(--text); border-radius: 8px; margin-bottom: 5px; font-weight: 500; transition: 0.2s; }
         .nav-item:hover { background: #f1f5f9; color: var(--primary); }
-
-        /* 본문 영역 */
-        .main-content { flex: 1; padding: 60px; overflow-y: auto; display: flex; align-items: center; justify-content: center; }
-        .welcome-card { background: white; padding: 50px; border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); text-align: center; max-width: 450px; width: 100%; border: 1px solid #e2e8f0; }
-        .welcome-card h1 { font-size: 2rem; margin-bottom: 15px; color: #0f172a; }
-        .welcome-card p { color: #64748b; line-height: 1.6; }
-
-        /* 모바일 최적화 (768px 이하) */
+        .main-content { flex: 1; overflow-y: auto; padding: 40px; }
+        .header-section { margin-bottom: 30px; }
+        .search-container { max-width: 600px; margin-bottom: 40px; }
+        .search-input { width: 100%; padding: 12px 20px; border-radius: 25px; border: 1px solid var(--border); outline: none; font-size: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--primary); }
+        .update-board { background: white; border-radius: 12px; border: 1px solid var(--border); width: 100%; border-collapse: collapse; overflow: hidden; }
+        .update-board td { padding: 15px; border-bottom: 1px solid var(--border); }
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; padding: 15px; border-right: none; border-bottom: 1px solid #e2e8f0; flex-direction: row; overflow-x: auto; white-space: nowrap; box-sizing: border-box; }
+            .sidebar { width: 100%; height: auto; padding: 10px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border); }
             .sidebar h2 { display: none; }
-            .nav-item { margin-bottom: 0; margin-right: 10px; padding: 10px 15px; font-size: 0.9rem; flex-shrink: 0; }
-            .main-content { padding: 30px 15px; }
-            .welcome-card { padding: 30px 20px; }
+            .nav-item { margin-bottom: 0; margin-right: 10px; white-space: nowrap; }
+            .main-content { padding: 20px; }
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <h2>🚀 Ryan's Archive</h2>
-        <a href="memo.html" class="nav-item"><span>📝</span> Memo</a>
-        <a href="01_daily_news.html" class="nav-item"><span>📰</span> 01 Daily News</a>
-        <a href="02_mckinsey_report.html" class="nav-item"><span>📈</span> 02 McKinsey Report</a>
-        <a href="03_ai_learning.html" class="nav-item"><span>🤖</span> 03 AI Learning</a>
-        <a href="04_finance.html" class="nav-item"><span>💰</span> 04 Finance</a>
-        <a href="05_humanities.html" class="nav-item"><span>📖</span> 05 Humanities</a>
+        <a href="memo.html" class="nav-item">📝 Memo</a>
+        <a href="01_daily_news.html" class="nav-item">📰 01 Daily News</a>
+        <a href="02_mckinsey_report.html" class="nav-item">📈 02 McKinsey Report</a>
+        <a href="03_ai_learning.html" class="nav-item">🤖 03 AI Learning</a>
+        <a href="04_finance.html" class="nav-item">💰 04 Finance</a>
+        <a href="05_humanities.html" class="nav-item">📖 05 Humanities</a>
     </div>
     <div class="main-content">
-        <div class="welcome-card">
-            <h1>Welcome, Ryan!</h1>
-            <p>오늘의 브리핑과 지식 동향이 업데이트되었습니다.<br>메뉴를 선택해 아카이브를 확인하세요.</p>
+        <div class="header-section">
+            <h1>Welcome Back, Ryan!</h1>
+            <p>오늘의 지식 브리핑과 새로운 리포트를 확인하세요.</p>
         </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="전체 아카이브 검색...">
+        </div>
+        <div class="section-title">✨ Recent Updates</div>
+        <table class="update-board">
+            <tbody id="recent-updates">
+                </tbody>
+        </table>
     </div>
 </body>
 </html>
