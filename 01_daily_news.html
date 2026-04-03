@@ -8,32 +8,41 @@
         :root { --sidebar-color: #ebf2ff; --primary-blue: #2563eb; --text-dark: #1e293b; --border-color: #e2e8f0; }
         body { font-family: -apple-system, sans-serif; margin: 0; background-color: white; display: flex; }
         
-        /* [사이드바 - index와 100% 동일 고정] */
+        /* [사이드바 - index.html과 100% 동일 수치] */
         .sidebar { 
             width: 260px; background-color: var(--sidebar-color); height: 100vh; 
             position: fixed; left: 0; top: 0; border-right: 1px solid var(--border-color);
-            display: flex; flex-direction: column; z-index: 1000;
+            display: flex; flex-direction: column; z-index: 1000; padding: 0; box-sizing: border-box;
         }
         .sidebar-logo { 
-            text-decoration: none; color: var(--text-dark); font-size: 1.5rem; 
-            font-weight: 800; margin: 40px 0 50px 30px; display: block; line-height: 1;
+            text-decoration: none; color: var(--text-dark); font-size: 1.5rem; font-weight: 800; 
+            margin: 40px 0 50px 30px; display: block; line-height: 1; /* line-height 고정 필수 */
         }
         .nav-item { 
             padding: 14px 18px; text-decoration: none; color: var(--text-dark); 
             border-radius: 10px; margin: 0 20px 8px 20px; font-weight: 500; 
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 10px; box-sizing: border-box;
         }
+        .nav-item:hover { background-color: rgba(255, 255, 255, 0.8); color: var(--primary-blue); }
         .nav-active { background-color: rgba(255, 255, 255, 0.9); color: var(--primary-blue); border: 1px solid var(--border-color); }
         .nav-divider { height: 1px; background-color: rgba(30, 41, 59, 0.1); margin: 10px 30px 15px 30px; }
 
         /* [본문 영역] */
-        .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; min-height: 100vh; background: white; }
+        .main-content { margin-left: 260px; flex: 1; padding: 60px 80px; min-height: 100vh; background: white; box-sizing: border-box; }
         h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 25px 0; border-left: 5px solid var(--primary-blue); padding-left: 15px; }
-        
+        .search-container { max-width: 500px; margin-bottom: 30px; }
+        .search-input { width: 100%; padding: 14px 22px; border-radius: 30px; border: 1px solid var(--border-color); background-color: #f8fafc; outline: none; font-size: 1rem; box-sizing: border-box; }
+
+        .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; table-layout: fixed; margin-bottom: 20px; }
+        .board-table th { background-color: #f8fafc; padding: 15px 20px; text-align: left; border-bottom: 2px solid var(--border-color); color: #64748b; font-size: 0.85rem; font-weight: 700; }
+        .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; cursor: pointer; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+
         @media (max-width: 768px) {
-            .sidebar { position: relative; width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 10px; }
+            body { flex-direction: column; overflow: auto; }
+            .sidebar { position: relative; width: 100%; height: auto; padding: 10px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
             .sidebar-logo, .nav-divider { display: none; }
-            .main-content { margin-left: 0; padding: 40px 20px; }
+            .nav-item { margin: 0 8px 0 0; padding: 10px 15px; font-size: 0.85rem; flex-shrink: 0; }
+            .main-content { margin-left: 0; padding: 30px 20px; flex: none; }
         }
     </style>
 </head>
