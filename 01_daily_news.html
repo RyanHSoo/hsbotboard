@@ -5,29 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>01 Daily News - Ryan's Archive</title>
     <style>
-        :root { --sidebar-color: #ebf2ff; --primary-blue: #2563eb; --text-dark: #1e293b; --border: #e2e8f0; }
+        :root {
+            --sidebar-color: #ebf2ff;
+            --primary-blue: #2563eb;
+            --text-dark: #1e293b;
+            --border-color: #e2e8f0;
+        }
+        
         body { font-family: -apple-system, sans-serif; margin: 0; display: flex; height: 100vh; background-color: white; overflow: hidden; }
-        .sidebar { width: 260px; background-color: var(--sidebar-color); padding: 40px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border); flex-shrink: 0; box-sizing: border-box; }
+        
+        /* [사이드바] - index와 동일한 디자인 */
+        .sidebar { width: 260px; background-color: var(--sidebar-color); padding: 40px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); flex-shrink: 0; box-sizing: border-box; }
         .sidebar-logo { text-decoration: none; color: var(--text-dark); font-size: 1.5rem; margin-bottom: 50px; padding-left: 10px; font-weight: 800; }
-        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--text-dark); border-radius: 10px; margin-bottom: 8px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--text-dark); border-radius: 10px; margin-bottom: 8px; font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
+        .nav-item:hover { background-color: rgba(255, 255, 255, 0.8); color: var(--primary-blue); }
+        .nav-active { background-color: rgba(255, 255, 255, 0.9); color: var(--primary-blue); border: 1px solid var(--border-color); }
+
+        /* [본문 영역] */
         .main-content { flex: 1; padding: 60px 80px; overflow-y: auto; background: white; box-sizing: border-box; }
-        h1 { font-size: 2rem; border-left: 5px solid var(--primary-blue); padding-left: 15px; margin-bottom: 30px; }
-        .search-input { width: 100%; max-width: 500px; padding: 12px 20px; border-radius: 25px; border: 1px solid var(--border); outline: none; margin-bottom: 30px; }
-        .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; table-layout: fixed; margin-bottom: 20px; }
-        .board-table th { background-color: #f8fafc; padding: 15px 20px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 0.85rem; }
-        .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; cursor: pointer; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        .board-header { margin-bottom: 40px; }
+        h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 25px 0; color: #0f172a; border-left: 5px solid var(--primary-blue); padding-left: 15px; }
+        
+        /* [검색창] */
+        .search-container { max-width: 500px; margin-bottom: 30px; }
+        .search-input { width: 100%; padding: 14px 22px; border-radius: 30px; border: 1px solid var(--border-color); background-color: #f8fafc; outline: none; font-size: 1rem; transition: 0.3s; box-sizing: border-box; }
+        .search-input:focus { border-color: var(--primary-blue); background-color: white; }
+
+        /* [게시판 테이블] */
+        .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; table-layout: fixed; margin-bottom: 20px; }
+        .board-table th { background-color: #f8fafc; padding: 15px 20px; text-align: left; border-bottom: 2px solid var(--border-color); color: #64748b; font-size: 0.85rem; font-weight: 700; }
+        .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; cursor: pointer; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        .board-table tr:not(.content-row):hover { background-color: #fcfdfe; }
+        
         .col-no { width: 60px; text-align: center; color: #94a3b8; }
         .col-date { width: 110px; color: #64748b; }
+        .col-title { color: #334155; font-weight: 600; }
+
+        /* 결과 없음 메시지 */
+        #no-result-msg { display: none; text-align: center; padding: 50px; color: #94a3b8; font-size: 1rem; border: 1px dashed var(--border-color); border-radius: 12px; margin-top: 10px; }
+
+        /* 상세 아코디언 */
         .content-row { display: none; background-color: #fafafa; }
         .detail-box { padding: 30px; border-left: 4px solid var(--primary-blue); background: white; }
-        .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px; padding-bottom: 50px; }
-        .page-btn { padding: 10px 25px; border: 1px solid var(--primary-blue); background: white; color: var(--primary-blue); border-radius: 8px; font-weight: 600; cursor: pointer; }
+
+        /* 페이징 버튼 */
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px; padding-bottom: 60px; }
+        .page-btn { padding: 10px 25px; border: 1px solid var(--primary-blue); background: white; color: var(--primary-blue); border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .page-btn:disabled { border-color: #cbd5e1; color: #cbd5e1; cursor: not-allowed; }
+        .page-btn:hover:not(:disabled) { background: var(--primary-blue); color: white; }
+
         @media (max-width: 768px) {
             body { flex-direction: column; overflow: auto; }
-            .sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; border-bottom: 1px solid var(--border); }
+            .sidebar { width: 100%; height: auto; padding: 15px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
             .sidebar-logo, .col-no { display: none; }
-            .main-content { padding: 40px 20px; flex: none; }
+            .main-content { padding: 30px 20px; flex: none; }
+            h1 { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -35,55 +67,109 @@
     <nav class="sidebar">
         <a href="index.html" class="sidebar-logo">Ryan's Archive</a>
         <a href="memo.html" class="nav-item">📝 Memo</a>
-        <a href="01_daily_news.html" class="nav-item" style="background:rgba(255,255,255,0.9); color:var(--primary-blue);">📰 01 Daily News</a>
-        </nav>
+        <a href="01_daily_news.html" class="nav-item nav-active">📰 01 Daily News</a>
+        <a href="02_mckinsey_report.html" class="nav-item">📈 02 McKinsey Report</a>
+        <a href="03_ai_learning.html" class="nav-item">🤖 03 AI Learning</a>
+        <a href="04_finance.html" class="nav-item">💰 04 Finance</a>
+        <a href="05_humanities.html" class="nav-item">📖 05 Humanities</a>
+    </nav>
+
     <main class="main-content">
-        <h1>01 Daily News</h1>
-        <input type="text" id="local-search" class="search-input" placeholder="날짜, 제목 검색..." onkeyup="filterBoard()">
-        <table class="board-table">
-            <thead><tr><th class="col-no">No</th><th class="col-date">날짜</th><th>제목</th></tr></thead>
-            <tbody id="board-body"></tbody>
+        <header class="board-header">
+            <h1>01 Daily News</h1>
+            <div class="search-container">
+                <input type="text" id="local-search" class="search-input" placeholder="날짜나 제목을 검색하고 엔터를 누르세요..." onkeypress="if(event.keyCode==13) {filterBoard();}">
+            </div>
+        </header>
+
+        <table class="board-table" id="data-table">
+            <thead>
+                <tr><th class="col-no">No</th><th class="col-date">날짜</th><th class="col-title">제목</th></tr>
+            </thead>
+            <tbody id="board-body">
+                </tbody>
         </table>
+
+        <div id="no-result-msg">검색 결과가 없습니다. 🔍</div>
+
         <div class="pagination" id="pagination-controls">
             <button class="page-btn" id="prev-btn" onclick="changePage(-1)">이전 20개</button>
             <span id="page-info">1 / 1</span>
             <button class="page-btn" id="next-btn" onclick="changePage(1)">다음 20개</button>
         </div>
     </main>
+
     <script>
-        let curPage = 1; let pSize = (window.innerWidth <= 768) ? 10 : 20;
+        let curPage = 1; 
+        let pSize = (window.innerWidth <= 768) ? 10 : 20;
+
         function render() {
             const rows = document.querySelectorAll('#board-body tr:not(.content-row)');
             const total = Math.ceil(rows.length / pSize) || 1;
             if(curPage > total) curPage = total;
-            const start = (curPage - 1) * pSize; const end = start + pSize;
-            rows.forEach((row, i) => { 
+
+            const start = (curPage - 1) * pSize;
+            const end = start + pSize;
+
+            rows.forEach((row, i) => {
                 row.style.display = (i >= start && i < end) ? "" : "none";
-                if(row.nextElementSibling && row.nextElementSibling.classList.contains('content-row')) row.nextElementSibling.style.display = 'none';
+                const nextRow = row.nextElementSibling;
+                if(nextRow && nextRow.classList.contains('content-row')) nextRow.style.display = 'none';
             });
+
             document.getElementById('page-info').innerText = `${curPage} / ${total}`;
             document.getElementById('prev-btn').disabled = (curPage === 1);
             document.getElementById('next-btn').disabled = (curPage === total);
             document.getElementById('prev-btn').innerText = `이전 ${pSize}개`;
             document.getElementById('next-btn').innerText = `다음 ${pSize}개`;
         }
+
         function changePage(s) { curPage += s; render(); document.querySelector('.main-content').scrollTop = 0; }
+
         function toggleContent(id) {
             const row = document.getElementById(id);
             const isVisible = row.style.display === 'table-row';
             document.querySelectorAll('.content-row').forEach(r => r.style.display = 'none');
             if (!isVisible) row.style.display = 'table-row';
         }
+
         function filterBoard() {
             const q = document.getElementById('local-search').value.toLowerCase();
             const rows = document.querySelectorAll('#board-body tr:not(.content-row)');
             const pg = document.getElementById('pagination-controls');
-            if(q === "") { pg.style.display = 'flex'; render(); return; }
+            const noRes = document.getElementById('no-result-msg');
+            const table = document.getElementById('data-table');
+
+            if(q === "") {
+                pg.style.display = 'flex';
+                noRes.style.display = 'none';
+                table.style.display = 'table';
+                render();
+                return;
+            }
+
+            // 검색 실행 시 페이징 버튼은 자연스럽게 숨김
             pg.style.display = 'none';
+            let matchCount = 0;
+
             rows.forEach(row => {
-                row.style.display = row.innerText.toLowerCase().includes(q) ? "" : "none";
+                const isMatch = row.innerText.toLowerCase().includes(q);
+                row.style.display = isMatch ? "" : "none";
+                if(isMatch) matchCount++;
+                
+                const nextRow = row.nextElementSibling;
+                if(nextRow && nextRow.classList.contains('content-row')) nextRow.style.display = 'none';
             });
+
+            if(matchCount === 0) {
+                table.style.display = 'none';
+                noRes.style.display = 'block';
+            } else {
+                table.style.display = 'table';
+                noRes.style.display = 'none';
+            }
         }
+
         window.addEventListener('load', render);
         window.addEventListener('resize', () => {
             const nSize = (window.innerWidth <= 768) ? 10 : 20;
