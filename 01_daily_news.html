@@ -201,9 +201,34 @@
             }, 150);
         }
 
-        window.onload   = function() { update(); setTimeout(openAnchor, 100); };
+                function loadBoard() {
+            const url = 'https://raw.githubusercontent.com/RyanHSoo/hsbotboard/main/board_data.json?t=' + Date.now();
+            fetch(url)
+              .then(r => r.json())
+              .then(data => {
+                const tbody = document.getElementById('board-body');
+                tbody.innerHTML = '';
+                data.forEach(item => {
+                    const tr1 = document.createElement('tr');
+                    tr1.setAttribute('onclick', "toggle('" + item.id + "')");
+                    tr1.innerHTML = '<td></td><td>' + item.date + '</td><td>' + item.title + '</td>';
+                    const tr2 = document.createElement('tr');
+                    tr2.className = 'content-row';
+                    tr2.id = item.id;
+                    tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail + '</div></td>';
+                    tbody.appendChild(tr1);
+                    tbody.appendChild(tr2);
+                });
+                update();
+                setTimeout(openAnchor, 100);
+              })
+              .catch(() => { update(); setTimeout(openAnchor, 100); });
+        }
+        window.onload = loadBoard;
         window.onresize = update;
         window.addEventListener('hashchange', openAnchor);
+        
+        
     </script>
 </body>
 </html>
