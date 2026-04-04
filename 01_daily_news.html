@@ -124,6 +124,7 @@
             document.getElementById('pg-box').style.display = 'flex';
             document.getElementById('data-table').style.display = 'table';
             document.getElementById('no-result-msg').style.display = 'none';
+            if (window.location.hash) openAnchor();
         }
 
         function handleSearch() {
