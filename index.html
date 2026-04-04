@@ -222,7 +222,7 @@
         }
 
         function loadBoard() {
-            fetch('https://raw.githubusercontent.com/RyanHSoo/hsbotboard/main/index_data.json?t=' + Date.now())
+            fetch('/index_data.json?t=' + Date.now() + Date.now())
               .then(r => r.json())
               .then(data => {
                 const tbody = document.getElementById('board-body');
