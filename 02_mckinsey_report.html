@@ -30,7 +30,7 @@
 
         .content-row { display: none; background: #fcfcfc; }
         .content-row td { white-space: normal; cursor: default; text-align: left; }
-        .detail-box { padding: 30px; background: white; line-height: 1.8; }
+        .detail-box { padding: 30px; background: white; line-height: 1.8; text-align: left; font-size: 15px; color: #334155; }
 
         #no-result-msg { display: none; text-align: center; padding: 50px; color: #94a3b8; border: 1px dashed var(--border); border-radius: 12px; }
         .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; padding-bottom: 50px; }
@@ -47,7 +47,7 @@
 </head>
 <body>
     <nav class="sidebar">
-        <a href="index.html" class="sidebar-logo">Ryan's<br>Archive</a>
+        <a href="index.html" class="sidebar-logo">Ryan's Archive</a>
         <a href="memo.html" class="nav-item">📝 Memo</a>
         <div class="nav-divider"></div>
         <a href="01_daily_news.html" class="nav-item">📰 01 Daily News</a>
@@ -117,7 +117,6 @@
             document.getElementById('pg-box').style.display      = 'flex';
             document.getElementById('data-table').style.display  = 'table';
             document.getElementById('no-result-msg').style.display = 'none';
-            if (window.location.hash) openAnchor();
         }
 
         function handleSearch() {
@@ -151,6 +150,22 @@
             if (!contentRow) return;
             const titleRow = contentRow.previousElementSibling;
             if (!titleRow) return;
+
+            // 해당 항목이 있는 페이지로 이동
+            const titleRows = Array.from(document.querySelectorAll('#board-body tr:not(.content-row)'));
+            const idx = titleRows.indexOf(titleRow);
+            if (idx >= 0) {
+                curPage = Math.floor(idx / getPerPage()) + 1;
+                titleRows.forEach((r, i) => {
+                    r.style.display = (i >= (curPage-1)*getPerPage() && i < curPage*getPerPage()) ? '' : 'none';
+                    const next = r.nextElementSibling;
+                    if (next && next.classList.contains('content-row')) next.style.display = 'none';
+                });
+                document.getElementById('pageInfo').innerText = `${curPage} / ${Math.max(Math.ceil(titleRows.length / getPerPage()), 1)}`;
+                document.getElementById('prevBtn').disabled = (curPage === 1);
+                document.getElementById('nextBtn').disabled = (curPage === Math.max(Math.ceil(titleRows.length / getPerPage()), 1));
+            }
+
             document.querySelectorAll('.content-row').forEach(r => r.style.display = 'none');
             contentRow.style.display = 'table-row';
             titleRow.style.display   = '';
@@ -175,9 +190,9 @@
                     tbody.appendChild(tr2);
                 });
                 update();
-                setTimeout(openAnchor, 100);
+                setTimeout(openAnchor, 300);
               })
-              .catch(() => { update(); setTimeout(openAnchor, 100); });
+              .catch(() => { update(); setTimeout(openAnchor, 300); });
         }
 
         window.onload = loadBoard;
