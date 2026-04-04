@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>02 McKinsey Report - Ryan's Archive</title>
     <style>
-        /* CSS는 01번과 동일 (생략하지 않고 전체 포함) */
         :root { --primary: #2563eb; --border: #e2e8f0; }
         body { font-family: -apple-system, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; padding-top: 60px; }
         .navbar { position: fixed; top: 0; width: 100%; background: white; border-bottom: 1px solid var(--border); height: 60px; display: flex; align-items: center; padding: 0 20px; z-index: 100; box-sizing: border-box; }
@@ -17,40 +16,143 @@
         .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 0.85rem; }
         .board-table td { padding: 18px 15px; border-bottom: 1px solid var(--border); cursor: pointer; }
         .board-table tr:not(.content-row):hover { background: #f1f5f9; }
-        .col-date { width: 110px; color: #64748b; font-size: 0.9rem; }
-        .col-title { font-weight: 600; color: #0f172a; }
         .content-row { display: none; background: #fafafa; }
         .detail-box { padding: 30px; border-left: 4px solid var(--primary); background: #ffffff; }
-        .article-block { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9; }
-        .article-block:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
-        .article-title { font-weight: 700; font-size: 1.1rem; color: var(--primary); text-decoration: none; display: block; margin-bottom: 10px; }
-        .article-summary { font-size: 1rem; line-height: 1.7; color: #334155; margin: 0; white-space: pre-line; }
-        @media (max-width: 600px) { .col-date { width: 80px; font-size: 0.8rem; } .col-title { font-size: 0.95rem; } }
+        .pagination { display: none; justify-content: center; align-items: center; gap: 15px; margin: 25px 0; }
+        .page-btn { padding: 8px 20px; border: 1px solid var(--border); border-radius: 8px; background: white; cursor: pointer; font-size: 0.9rem; }
+        .page-btn:hover:not(:disabled) { background: #f1f5f9; }
+        .page-btn:disabled { opacity: 0.4; cursor: default; }
+        #no-result-msg { display: none; text-align: center; padding: 40px; color: #94a3b8; }
+        @media (max-width: 600px) { .board-table td { padding: 14px 10px; font-size: 0.9rem; } }
     </style>
 </head>
 <body>
-    <nav class="navbar"><a href="index.html" class="nav-back">🏠</a><input type="text" class="search-bar" placeholder="날짜 또는 제목 검색..." onkeyup="searchBoard()"></nav>
+    <nav class="navbar">
+        <a href="index.html" class="nav-back">🏠</a>
+        <input type="text" class="search-bar" placeholder="날짜 또는 제목 검색..."
+               oninput="handleSearch(this.value)">
+    </nav>
     <div class="container">
         <h1>02 McKinsey Report</h1>
-        <table class="board-table">
-            <thead><tr><th class="col-date">날짜</th><th class="col-title">리포트 제목</th></tr></thead>
+        <table class="board-table" id="data-table" style="display:none;">
+            <thead>
+                <tr id="table-header">
+                    <th style="width:85px;text-align:center;">No</th>
+                    <th style="width:130px;">날짜</th>
+                    <th>제목</th>
+                </tr>
+            </thead>
             <tbody id="board-body"></tbody>
         </table>
+        <div id="no-result-msg">🔍 검색 결과가 없습니다.</div>
+        <div class="pagination" id="pg-box">
+            <button class="page-btn" id="prevBtn" onclick="movePage(-1)">이전</button>
+            <span id="pageInfo">1 / 1</span>
+            <button class="page-btn" id="nextBtn" onclick="movePage(1)">다음</button>
+        </div>
     </div>
+
     <script>
-        function toggleContent(id) {
-            const row = document.getElementById(id);
-            const isVisible = row.style.display === 'table-row';
+        let curPage = 1;
+        const getPerPage = () => window.innerWidth <= 768 ? 10 : 20;
+
+        function toggle(id) {
+            const el = document.getElementById(id);
+            const isVisible = el.style.display === 'table-row';
             document.querySelectorAll('.content-row').forEach(r => r.style.display = 'none');
-            row.style.display = isVisible ? 'none' : 'table-row';
-            if(!isVisible) row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            if (!isVisible) el.style.display = 'table-row';
         }
-        function searchBoard() {
-            const q = document.querySelector('.search-bar').value.toLowerCase();
-            document.querySelectorAll('#board-body tr:not(.content-row)').forEach(tr => {
-                tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
+
+        function update() {
+            const titleRows = Array.from(document.querySelectorAll('#board-body tr:not(.content-row)'));
+            const perPage   = getPerPage();
+            const total     = Math.max(Math.ceil(titleRows.length / perPage), 1);
+            if (curPage < 1) curPage = 1;
+            if (curPage > total) curPage = total;
+
+            document.getElementById('table-header').innerHTML =
+                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th>제목</th>';
+
+            titleRows.forEach((r, i) => {
+                const isVisible = i >= (curPage - 1) * perPage && i < curPage * perPage;
+                r.style.display = isVisible ? '' : 'none';
+                r.cells[0].innerText = titleRows.length - i;
+                const next = r.nextElementSibling;
+                if (next && next.classList.contains('content-row')) next.style.display = 'none';
             });
+
+            document.getElementById('pageInfo').innerText  = `${curPage} / ${total}`;
+            document.getElementById('prevBtn').disabled    = (curPage === 1);
+            document.getElementById('nextBtn').disabled    = (curPage === total);
+            document.getElementById('pg-box').style.display       = 'flex';
+            document.getElementById('data-table').style.display   = 'table';
+            document.getElementById('no-result-msg').style.display = 'none';
+            if (window.location.hash) openAnchor();
         }
+
+        function handleSearch(q) {
+            q = q.toLowerCase().trim();
+            const titleRows = document.querySelectorAll('#board-body tr:not(.content-row)');
+            if (q === '') { update(); return; }
+
+            document.getElementById('pg-box').style.display = 'none';
+            document.getElementById('table-header').innerHTML =
+                '<th style="width:130px;">날짜</th><th>제목</th>';
+
+            let matchCount = 0;
+            titleRows.forEach(r => {
+                const isMatch = r.innerText.toLowerCase().includes(q);
+                r.style.display = isMatch ? '' : 'none';
+                if (isMatch) { r.cells[0].style.display = 'none'; matchCount++; }
+                const next = r.nextElementSibling;
+                if (next && next.classList.contains('content-row')) next.style.display = 'none';
+            });
+            document.getElementById('data-table').style.display    = matchCount === 0 ? 'none' : 'table';
+            document.getElementById('no-result-msg').style.display = matchCount === 0 ? 'block' : 'none';
+        }
+
+        function movePage(s) { curPage += s; update(); }
+
+        function openAnchor() {
+            const params   = new URLSearchParams(window.location.search);
+            const targetId = params.get('open') || window.location.hash.replace('#', '');
+            if (!targetId) return;
+            const contentRow = document.getElementById(targetId);
+            if (!contentRow) return;
+            const titleRow = contentRow.previousElementSibling;
+            if (!titleRow) return;
+            document.querySelectorAll('.content-row').forEach(r => r.style.display = 'none');
+            contentRow.style.display = 'table-row';
+            titleRow.style.display   = '';
+            setTimeout(() => titleRow.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+        }
+
+        function loadBoard() {
+            fetch('/mckinsey_data.json?t=' + Date.now())
+              .then(r => r.json())
+              .then(data => {
+                const tbody = document.getElementById('board-body');
+                tbody.innerHTML = '';
+                data.forEach(item => {
+                    const tr1 = document.createElement('tr');
+                    tr1.setAttribute('onclick', "toggle('" + item.id + "')");
+                    tr1.innerHTML = '<td></td><td>' + item.date + '</td><td>' + item.title + '</td>';
+                    const tr2 = document.createElement('tr');
+                    tr2.className = 'content-row';
+                    tr2.id = item.id;
+                    tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail + '</div></td>';
+                    tbody.appendChild(tr1);
+                    tbody.appendChild(tr2);
+                });
+                update();
+                setTimeout(openAnchor, 100);
+              })
+              .catch(() => { update(); setTimeout(openAnchor, 100); });
+        }
+
+        window.onload = loadBoard;
+        window.onresize = update;
+        window.addEventListener('hashchange', openAnchor);
     </script>
 </body>
 </html>
