@@ -221,7 +221,29 @@
             setTimeout(() => { titleRow.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 150);
         }
 
-        window.addEventListener('DOMContentLoaded', function() { update(); setTimeout(openAnchor, 100); });
+        function loadBoard() {
+            fetch('https://raw.githubusercontent.com/RyanHSoo/hsbotboard/main/index_data.json?t=' + Date.now())
+              .then(r => r.json())
+              .then(data => {
+                const tbody = document.getElementById('board-body');
+                tbody.innerHTML = '';
+                data.forEach(item => {
+                    const tr1 = document.createElement('tr');
+                    tr1.setAttribute('onclick', "toggleDetail('" + item.id + "')");
+                    tr1.innerHTML = '<td>' + item.category + '</td><td>' + item.date + '</td><td>' + item.title + '</td>';
+                    const tr2 = document.createElement('tr');
+                    tr2.className = 'content-row';
+                    tr2.id = item.id;
+                    tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail + '</div></td>';
+                    tbody.appendChild(tr1);
+                    tbody.appendChild(tr2);
+                });
+                update();
+                setTimeout(openAnchor, 100);
+              })
+              .catch(() => { update(); setTimeout(openAnchor, 100); });
+        }
+        window.addEventListener('DOMContentLoaded', loadBoard);
         window.addEventListener('hashchange', openAnchor);
         window.addEventListener('resize', update);
     </script>
