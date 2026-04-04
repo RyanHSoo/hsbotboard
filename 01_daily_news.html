@@ -161,7 +161,32 @@
         }
 
         function movePage(s) { curPage += s; update(); }
-        window.onload = update;
+
+        // URL 앵커(#row-ID) 감지 → 해당 행 자동 펼침
+        // 텔레그램 링크 클릭 시 바로 해당 게시글이 열린 상태로 진입
+        function openAnchor() {
+            const hash = window.location.hash; // 예: #row-morning-20260404-0630
+            if (!hash) return;
+            const targetId = hash.replace('#', '');          // row-morning-...
+            const contentRow = document.getElementById(targetId); // content-row
+            if (!contentRow) return;
+
+            // 해당 content-row가 속한 제목 행을 찾아서 페이지 표시
+            const titleRow = contentRow.previousElementSibling;
+            if (!titleRow) return;
+
+            // 모든 행 펼치고 해당 행만 보이게
+            document.querySelectorAll('.content-row').forEach(r => r.style.display = 'none');
+            contentRow.style.display = 'table-row';
+            titleRow.style.display   = '';
+
+            // 해당 행으로 스크롤
+            setTimeout(() => {
+                titleRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        window.onload   = function() { update(); openAnchor(); };
         window.onresize = update;
     </script>
 </body>
