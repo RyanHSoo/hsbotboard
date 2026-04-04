@@ -2,10 +2,15 @@ name: deploy
 on:
   push:
     branches: [main]
+concurrency:
+  group: vercel-deploy
+  cancel-in-progress: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for all commits to settle
+        run: sleep 180
       - name: Trigger Vercel Deploy
         run: |
           if [ -n "$VERCEL_DEPLOY_HOOK" ]; then
