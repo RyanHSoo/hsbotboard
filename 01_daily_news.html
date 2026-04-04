@@ -188,6 +188,7 @@
 
         window.onload   = function() { update(); openAnchor(); };
         window.onresize = update;
+        window.addEventListener('hashchange', openAnchor);
     </script>
 </body>
 </html>
