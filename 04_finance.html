@@ -126,13 +126,13 @@
 
             document.getElementById('pg-box').style.display = 'none';
             document.getElementById('table-header').innerHTML =
-                '<th style="width:130px;">날짜</th><th>제목</th>';
+                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th>제목</th>';
 
             let matchCount = 0;
             titleRows.forEach(r => {
                 const isMatch = r.innerText.toLowerCase().includes(q);
                 r.style.display = isMatch ? '' : 'none';
-                if (isMatch) { r.cells[0].style.display = 'none'; matchCount++; }
+                if (isMatch) { matchCount++; }
                 const next = r.nextElementSibling;
                 if (next && next.classList.contains('content-row')) next.style.display = 'none';
             });
