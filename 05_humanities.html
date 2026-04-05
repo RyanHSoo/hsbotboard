@@ -172,7 +172,7 @@
         }
 
         function loadBoard() {
-            fetch('/humanities_data.json?t=' + Date.now())
+            fetch('./humanities_data.json?t=' + Date.now())
               .then(r => r.json())
               .then(data => {
                 const tbody = document.getElementById('board-body');

@@ -172,7 +172,7 @@
         }
 
         function loadBoard() {
-            fetch('/ai_learning_data.json?t=' + Date.now())
+            fetch('./ai_learning_data.json?t=' + Date.now())
               .then(r => r.json())
               .then(data => {
                 const tbody = document.getElementById('board-body');

@@ -173,7 +173,7 @@
         }
 
         function loadBoard() {
-            fetch('/mckinsey_data.json?t=' + Date.now())
+            fetch('./mckinsey_data.json?t=' + Date.now())
               .then(r => r.json())
               .then(data => {
                 const tbody = document.getElementById('board-body');
