@@ -207,12 +207,15 @@
 
         function movePage(s) { curPage += s; update(); }
 
-        function openAnchor() {
+        function openAnchor(retries) {
             const params   = new URLSearchParams(window.location.search);
             const targetId = params.get('open') || window.location.hash.replace('#', '');
             if (!targetId) return;
             const contentRow = document.getElementById(targetId);
-            if (!contentRow) return;
+            if (!contentRow) {
+                if ((retries || 0) < 5) setTimeout(() => openAnchor((retries || 0) + 1), 800);
+                return;
+            }
             const titleRow = contentRow.previousElementSibling;
             if (!titleRow) return;
 
@@ -233,7 +236,10 @@
             document.querySelectorAll('.content-row').forEach(r => r.style.display = 'none');
             contentRow.style.display = 'table-row';
             titleRow.style.display   = '';
-            setTimeout(() => titleRow.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+            setTimeout(() => {
+                titleRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                window.scrollBy(0, -80);
+            }, 500);
         }
 
         function loadBoard() {
