@@ -62,6 +62,14 @@
         .form-msg.error { color: #ef4444; }
         .form-msg.success { color: #22c55e; }
 
+        .delete-area { margin-top: 20px; padding-top: 16px; border-top: 1px solid #f1f5f9; text-align: right; }
+        .del-btn { padding: 6px 14px; background: white; border: 1px solid #fca5a5; color: #ef4444; border-radius: 6px; font-size: 13px; cursor: pointer; }
+        .del-btn:hover { background: #fef2f2; }
+        .del-confirm { display: none; margin-top: 10px; justify-content: flex-end; align-items: center; gap: 8px; }
+        .del-pw { padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; width: 150px; outline: none; }
+        .del-ok { padding: 6px 14px; background: #ef4444; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; }
+        .del-cancel-btn { padding: 6px 14px; background: white; border: 1px solid var(--border); color: #64748b; border-radius: 6px; font-size: 13px; cursor: pointer; }
+
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { position: relative; width: 100%; height: auto; padding: 10px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border); }
@@ -241,7 +249,15 @@
                     const tr2 = document.createElement('tr');
                     tr2.className = 'content-row';
                     tr2.id = item.id;
-                    tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail + '</div></td>';
+                    tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail +
+                        '<div class="delete-area">' +
+                        '<button class="del-btn" onclick="showDelConfirm(\'' + item.id + '\')">🗑️ 삭제</button>' +
+                        '<div class="del-confirm" id="delconfirm-' + item.id + '">' +
+                        '<input type="password" class="del-pw" id="delpw-' + item.id + '" placeholder="비밀번호">' +
+                        '<button class="del-ok" onclick="deleteMemo(\'' + item.id + '\')">확인</button>' +
+                        '<button class="del-cancel-btn" onclick="hideDelConfirm(\'' + item.id + '\')">취소</button>' +
+                        '</div></div>' +
+                        '</div></td>';
                     tbody.appendChild(tr1);
                     tbody.appendChild(tr2);
                 });
@@ -311,6 +327,37 @@
             const el = document.getElementById('form-msg');
             el.textContent = text;
             el.className = 'form-msg' + (type ? ' ' + type : '');
+        }
+
+        function showDelConfirm(id) {
+            const el = document.getElementById('delconfirm-' + id);
+            el.style.display = 'flex';
+            document.getElementById('delpw-' + id).focus();
+        }
+
+        function hideDelConfirm(id) {
+            const el = document.getElementById('delconfirm-' + id);
+            el.style.display = 'none';
+            document.getElementById('delpw-' + id).value = '';
+        }
+
+        async function deleteMemo(id) {
+            const pw = document.getElementById('delpw-' + id).value.trim();
+            if (!pw) { alert('비밀번호를 입력하세요.'); return; }
+
+            const body = new URLSearchParams({ action: 'delete', password: pw, id: id });
+            try {
+                const res = await fetch(GAS_URL, { method: 'POST', body, redirect: 'follow' });
+                const data = await res.json();
+                if (data.success) {
+                    alert('삭제되었습니다.');
+                    loadBoard();
+                } else {
+                    alert(data.message || '삭제 실패');
+                }
+            } catch(e) {
+                alert('네트워크 오류가 발생했습니다.');
+            }
         }
 
         window.onload = loadBoard;
