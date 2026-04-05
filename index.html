@@ -36,8 +36,8 @@
         /* [게시판] */
         .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); table-layout: fixed; }
         .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 16px; }
-        .board-table th:nth-child(1) { width: 150px; }
-        .board-table th:nth-child(2) { width: 160px; }
+        .board-table th:nth-child(1) { width: 170px; }
+        .board-table th:nth-child(2) { width: 140px; }
         .board-table tbody tr:not(.content-row) { cursor: pointer; transition: background 0.15s; }
         .board-table tbody tr:not(.content-row):hover { background: #f1f5f9; }
         .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -96,7 +96,7 @@
 
         <table class="board-table" id="data-table">
             <thead>
-                <tr><th style="width:150px;">카테고리</th><th style="width:160px;">날짜</th><th>제목</th></tr>
+                <tr><th style="width:170px;">카테고리</th><th style="width:140px;">날짜</th><th>제목</th></tr>
             </thead>
             <tbody id="board-body">
                 <tr onclick="toggleDetail('idx-idx-stock-morning-20260404-1646')"><td>Daily News</td><td>2026.04.04</td><td>4/4 모닝 증시 브리핑</td></tr>
@@ -225,6 +225,7 @@
             fetch('/index_data.json?t=' + Date.now() + Date.now())
               .then(r => r.json())
               .then(data => {
+                data.sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
                 const tbody = document.getElementById('board-body');
                 tbody.innerHTML = '';
                 data.forEach(item => {
