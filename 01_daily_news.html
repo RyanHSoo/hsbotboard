@@ -208,6 +208,14 @@
             fetch(url)
               .then(r => r.json())
               .then(data => {
+                data.sort((a, b) => {
+                    const dateCmp = b.date.localeCompare(a.date);
+                    if (dateCmp !== 0) return dateCmp;
+                    const getTime = id => { const m = id.match(/(\d{8}-\d{4})/); return m ? m[1] : id; };
+                    const timeCmp = getTime(b.id).localeCompare(getTime(a.id));
+                    if (timeCmp !== 0) return timeCmp;
+                    return a.id.localeCompare(b.id);
+                });
                 const tbody = document.getElementById('board-body');
                 tbody.innerHTML = '';
                 data.forEach(item => {
