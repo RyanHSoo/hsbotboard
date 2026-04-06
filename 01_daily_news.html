@@ -203,7 +203,7 @@
         }
 
                 function loadBoard() {
-            const url = '/board_data.json?t=' + Date.now();
+            const url = './board_data.json?t=' + Date.now();
             fetch(url)
               .then(r => r.json())
               .then(data => {
