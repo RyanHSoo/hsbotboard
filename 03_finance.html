@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>02 McKinsey Report - Ryan's Archive</title>
+    <title>03 Finance - Ryan's Archive</title>
     <style>
         :root { --sidebar-bg: #ebf2ff; --primary: #2563eb; --dark: #1e293b; --border: #e2e8f0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,19 +46,22 @@
     </style>
 </head>
 <body>
-    <nav class="sidebar">
+        <nav class="sidebar">
         <a href="index.html" class="sidebar-logo">Ryan's Archive</a>
         <a href="memo.html" class="nav-item">📝 Memo</a>
         <div class="nav-divider"></div>
         <a href="01_daily_news.html" class="nav-item">📰 01 Daily News</a>
-        <a href="02_mckinsey_report.html" class="nav-item nav-active">📈 02 McKinsey Report</a>
-        <a href="03_ai_learning.html" class="nav-item">🤖 03 AI Learning</a>
-        <a href="04_finance.html" class="nav-item">💰 04 Finance</a>
-        <a href="05_humanities.html" class="nav-item">📖 05 Humanities</a>
+        <a href="02_ai_learning.html" class="nav-item">🤖 02 AI Learning</a>
+        <a href="03_finance.html" class="nav-item nav-active">💰 03 Finance</a>
+        <a href="04_humanities.html" class="nav-item">📖 04 Humanities</a>
+        <div class="nav-divider"></div>
+        <a href="mckinsey.html" class="nav-item">📊 McKinsey</a>
+        <span class="nav-item" style="color:#94a3b8;cursor:default;pointer-events:none;">📈 Gartner</span>
+        <span class="nav-item" style="color:#94a3b8;cursor:default;pointer-events:none;">💼 BCG</span>
     </nav>
 
     <main class="main-content">
-        <h1>02 McKinsey Report</h1>
+        <h1>03 Finance</h1>
         <div class="search-container">
             <input type="text" id="common-search" class="search-input" placeholder="결과 내 검색 (Enter)..."
                    onkeypress="if(event.keyCode==13){handleSearch();}">
@@ -151,7 +154,6 @@
             const titleRow = contentRow.previousElementSibling;
             if (!titleRow) return;
 
-            // 해당 항목이 있는 페이지로 이동
             const titleRows = Array.from(document.querySelectorAll('#board-body tr:not(.content-row)'));
             const idx = titleRows.indexOf(titleRow);
             if (idx >= 0) {
@@ -173,7 +175,7 @@
         }
 
         function loadBoard() {
-            fetch('./mckinsey_data.json?t=' + Date.now())
+            fetch('./finance_data.json?t=' + Date.now())
               .then(r => r.json())
               .then(data => {
                 const tbody = document.getElementById('board-body');
