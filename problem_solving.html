@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>02 AI Learning - Ryan's Archive</title>
+    <title>Problem Solving - Ryan's Archive</title>
     <style>
         :root { --sidebar-bg: #ebf2ff; --primary: #2563eb; --dark: #1e293b; --border: #e2e8f0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -11,28 +11,48 @@
 
         .sidebar { width: 260px; background: var(--sidebar-bg); height: 100vh; position: fixed; left: 0; top: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 9999; }
         .sidebar-logo { display: block; text-decoration: none; color: var(--dark); font-size: 24px; font-weight: 800; margin: 40px 0 50px 30px; line-height: 1.2; }
-        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--dark); border-radius: 10px; margin: 0 20px 8px 20px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .nav-item { padding: 14px 18px; text-decoration: none; color: var(--dark); border-radius: 10px; margin: 0 20px 8px 20px; font-weight: 500; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.8); color: var(--primary); }
         .nav-active { background: white; color: var(--primary); border: 1px solid var(--border); }
         .nav-divider { height: 1px; background: rgba(30, 41, 59, 0.1); margin: 10px 30px 15px 30px; }
 
         .main-content { margin-left: 260px; flex: 1; padding: 40px 30px; background: white; min-width: 0; }
-        h1 { font-size: 32px; font-weight: 800; margin-bottom: 25px; border-left: 5px solid var(--primary); padding-left: 15px; color: #0f172a; }
+
+        h1 { font-size: 32px; font-weight: 800; border-left: 5px solid var(--primary); padding-left: 15px; color: #0f172a; margin-bottom: 8px; }
+        .subtitle { color: #64748b; font-size: 14px; margin-bottom: 25px; padding-left: 20px; }
 
         .search-container { max-width: 500px; margin-bottom: 30px; }
         .search-input { width: 100%; padding: 14px 22px; border-radius: 30px; border: 1px solid var(--border); background: #f8fafc; outline: none; font-size: 16px; }
+        .search-input:focus { border-color: var(--primary); }
 
         .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); table-layout: fixed; }
+        .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 16px; }
         .board-table th:nth-child(1) { width: 85px; text-align: center; }
         .board-table th:nth-child(2) { width: 130px; }
-        .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 16px; }
-        .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 17px; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .board-table th:nth-child(3) { width: 140px; }
+        .board-table tbody tr:not(.content-row) { cursor: pointer; transition: background 0.15s; }
+        .board-table tbody tr:not(.content-row):hover { background: #f1f5f9; }
+        .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .board-table td:nth-child(1) { text-align: center; font-weight: 600; color: #64748b; }
+        .board-table td:nth-child(4) { white-space: normal; overflow: visible; text-overflow: clip; }
 
         .content-row { display: none; background: #fcfcfc; }
-        .content-row td { white-space: normal; cursor: default; text-align: left; }
-        .detail-box { padding: 30px; background: white; line-height: 1.8; text-align: left; font-size: 15px; color: #334155; }
+        .content-row td { white-space: normal; cursor: default; }
 
-        #no-result-msg { display: none; text-align: center; padding: 50px; color: #94a3b8; border: 1px dashed var(--border); border-radius: 12px; }
+        .detail-box { padding: 30px; background: white; line-height: 1.8; text-align: left; font-size: 15px; color: #334155; }
+        .detail-box h2 { font-size: 20px; font-weight: 700; color: #0f172a; margin: 20px 0 10px 0; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+        .detail-box h3 { font-size: 17px; font-weight: 600; color: #1e293b; margin: 16px 0 8px 0; }
+        .detail-box p { margin-bottom: 10px; }
+        .detail-box ul, .detail-box ol { padding-left: 20px; margin-bottom: 10px; }
+        .detail-box li { margin-bottom: 6px; }
+        .detail-box table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .detail-box table th, .detail-box table td { border: 1px solid var(--border); padding: 10px 14px; font-size: 14px; }
+        .detail-box table th { background: #f8fafc; font-weight: 600; }
+        .detail-box blockquote { border-left: 4px solid var(--primary); padding: 10px 16px; background: #eff6ff; color: #1e40af; margin: 12px 0; border-radius: 0 8px 8px 0; font-style: italic; }
+
+        .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; margin-right: 6px; }
+
+        #no-result-msg { display: none; text-align: center; padding: 60px; color: #94a3b8; border: 1px dashed var(--border); border-radius: 12px; font-size: 16px; }
         .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; padding-bottom: 50px; }
         .page-btn { padding: 8px 20px; border: 1px solid var(--primary); background: white; color: var(--primary); border-radius: 6px; cursor: pointer; font-weight: 600; }
         .page-btn:disabled { border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; }
@@ -41,18 +61,19 @@
             body { flex-direction: column; }
             .sidebar { position: relative; width: 100%; height: auto; padding: 10px; flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--border); }
             .sidebar-logo, .nav-divider { display: none; }
-            .main-content { margin-left: 0; padding: 30px 20px; }
+            .main-content { margin-left: 0; padding: 20px 15px; }
+            h1 { font-size: 24px; }
         }
     </style>
 </head>
 <body>
-        <nav class="sidebar">
+    <nav class="sidebar">
         <a href="index.html" class="sidebar-logo">Ryan's Archive</a>
         <a href="memo.html" class="nav-item">📝 Memo</a>
-        <a href="problem_solving.html" class="nav-item">🧩 Problem Solving</a>
+        <a href="problem_solving.html" class="nav-item nav-active">🧩 Problem Solving</a>
         <div class="nav-divider"></div>
         <a href="01_daily_news.html" class="nav-item">📰 01 Daily News</a>
-        <a href="02_ai_learning.html" class="nav-item nav-active">🤖 02 AI Learning</a>
+        <a href="02_ai_learning.html" class="nav-item">🤖 02 AI Learning</a>
         <a href="03_finance.html" class="nav-item">💰 03 Finance</a>
         <a href="04_humanities.html" class="nav-item">📖 04 Humanities</a>
         <div class="nav-divider"></div>
@@ -62,9 +83,10 @@
     </nav>
 
     <main class="main-content">
-        <h1>02 AI Learning</h1>
+        <h1>Problem Solving</h1>
+        <p class="subtitle">전략적 사고 훈련 리포트 — Gemini Gems 기반 문제 정의 세션</p>
         <div class="search-container">
-            <input type="text" id="common-search" class="search-input" placeholder="결과 내 검색 (Enter)..."
+            <input type="text" id="common-search" class="search-input" placeholder="케이스 검색 (Enter)..."
                    onkeypress="if(event.keyCode==13){handleSearch();}">
         </div>
 
@@ -73,12 +95,13 @@
                 <tr id="table-header">
                     <th style="width:85px;text-align:center;">No</th>
                     <th style="width:130px;">날짜</th>
-                    <th>제목</th>
+                    <th style="width:140px;">카테고리</th>
+                    <th>케이스 제목</th>
                 </tr>
             </thead>
             <tbody id="board-body"></tbody>
         </table>
-        <div id="no-result-msg">🔍 검색 결과가 없습니다.</div>
+        <div id="no-result-msg">🔍 아직 등록된 리포트가 없습니다.</div>
         <div class="pagination" id="pg-box" style="display:none;">
             <button class="page-btn" id="prevBtn" onclick="movePage(-1)">이전</button>
             <span id="pageInfo">1 / 1</span>
@@ -105,7 +128,7 @@
             if (curPage > total) curPage = total;
 
             document.getElementById('table-header').innerHTML =
-                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th>제목</th>';
+                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th style="width:140px;">카테고리</th><th>케이스 제목</th>';
 
             titleRows.forEach((r, i) => {
                 const isVisible = i >= (curPage - 1) * perPage && i < curPage * perPage;
@@ -115,12 +138,13 @@
                 if (next && next.classList.contains('content-row')) next.style.display = 'none';
             });
 
+            const hasData = titleRows.length > 0;
             document.getElementById('pageInfo').innerText  = `${curPage} / ${total}`;
             document.getElementById('prevBtn').disabled    = (curPage === 1);
             document.getElementById('nextBtn').disabled    = (curPage === total);
-            document.getElementById('pg-box').style.display      = 'flex';
-            document.getElementById('data-table').style.display  = 'table';
-            document.getElementById('no-result-msg').style.display = 'none';
+            document.getElementById('pg-box').style.display      = hasData ? 'flex' : 'none';
+            document.getElementById('data-table').style.display  = hasData ? 'table' : 'none';
+            document.getElementById('no-result-msg').style.display = hasData ? 'none' : 'block';
         }
 
         function handleSearch() {
@@ -130,18 +154,19 @@
 
             document.getElementById('pg-box').style.display = 'none';
             document.getElementById('table-header').innerHTML =
-                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th>제목</th>';
+                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th style="width:140px;">카테고리</th><th>케이스 제목</th>';
 
             let matchCount = 0;
             titleRows.forEach(r => {
                 const isMatch = r.innerText.toLowerCase().includes(q);
                 r.style.display = isMatch ? '' : 'none';
-                if (isMatch) { matchCount++; }
+                if (isMatch) matchCount++;
                 const next = r.nextElementSibling;
                 if (next && next.classList.contains('content-row')) next.style.display = 'none';
             });
             document.getElementById('data-table').style.display    = matchCount === 0 ? 'none' : 'table';
             document.getElementById('no-result-msg').style.display = matchCount === 0 ? 'block' : 'none';
+            document.getElementById('no-result-msg').innerText     = matchCount === 0 ? '🔍 검색 결과가 없습니다.' : '';
         }
 
         function movePage(s) { curPage += s; update(); }
@@ -175,20 +200,39 @@
             setTimeout(() => titleRow.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
         }
 
+        function renderMarkdown(text) {
+            if (!text) return '';
+            // 마크다운 → HTML 기본 변환
+            return text
+                .replace(/^#{3}\s(.+)$/gm, '<h3>$1</h3>')
+                .replace(/^#{2}\s(.+)$/gm, '<h2>$1</h2>')
+                .replace(/^#{1}\s(.+)$/gm, '<h2>$1</h2>')
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/^>\s(.+)$/gm, '<blockquote>$1</blockquote>')
+                .replace(/^[-*]\s(.+)$/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/^(?!<[huplb])(.+)$/gm, '<p>$1</p>');
+        }
+
         function loadBoard() {
-            fetch('./ai_learning_data.json?t=' + Date.now())
+            fetch('./problem_solving_data.json?t=' + Date.now())
               .then(r => r.json())
               .then(data => {
                 const tbody = document.getElementById('board-body');
                 tbody.innerHTML = '';
+                if (!data || data.length === 0) { update(); return; }
                 data.forEach(item => {
                     const tr1 = document.createElement('tr');
                     tr1.setAttribute('onclick', "toggle('" + item.id + "')");
-                    tr1.innerHTML = '<td></td><td>' + item.date + '</td><td>' + item.title + '</td>';
+                    const categoryTag = item.category ? `<span class="tag">${item.category}</span>` : '';
+                    tr1.innerHTML = `<td></td><td>${item.date}</td><td>${categoryTag}</td><td>${item.title}</td>`;
                     const tr2 = document.createElement('tr');
                     tr2.className = 'content-row';
                     tr2.id = item.id;
-                    tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail + '</div></td>';
+                    const contentHtml = item.detail_html || renderMarkdown(item.detail || '');
+                    tr2.innerHTML = `<td colspan="4"><div class="detail-box">${contentHtml}</div></td>`;
                     tbody.appendChild(tr1);
                     tbody.appendChild(tr2);
                 });
