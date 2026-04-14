@@ -29,12 +29,11 @@
         .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 16px; }
         .board-table th:nth-child(1) { width: 85px; text-align: center; }
         .board-table th:nth-child(2) { width: 130px; }
-        .board-table th:nth-child(3) { width: 140px; }
         .board-table tbody tr:not(.content-row) { cursor: pointer; transition: background 0.15s; }
         .board-table tbody tr:not(.content-row):hover { background: #f1f5f9; }
         .board-table td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .board-table td:nth-child(1) { text-align: center; font-weight: 600; color: #64748b; }
-        .board-table td:nth-child(4) { white-space: normal; overflow: visible; text-overflow: clip; }
+        .board-table td:nth-child(3) { white-space: normal; overflow: visible; text-overflow: clip; }
 
         .content-row { display: none; background: #fcfcfc; }
         .content-row td { white-space: normal; cursor: default; }
@@ -49,8 +48,6 @@
         .detail-box table th, .detail-box table td { border: 1px solid var(--border); padding: 10px 14px; font-size: 14px; }
         .detail-box table th { background: #f8fafc; font-weight: 600; }
         .detail-box blockquote { border-left: 4px solid var(--primary); padding: 10px 16px; background: #eff6ff; color: #1e40af; margin: 12px 0; border-radius: 0 8px 8px 0; font-style: italic; }
-
-        .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; margin-right: 6px; }
 
         #no-result-msg { display: none; text-align: center; padding: 60px; color: #94a3b8; border: 1px dashed var(--border); border-radius: 12px; font-size: 16px; }
         .pagination { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; padding-bottom: 50px; }
@@ -95,7 +92,6 @@
                 <tr id="table-header">
                     <th style="width:85px;text-align:center;">No</th>
                     <th style="width:130px;">날짜</th>
-                    <th style="width:140px;">카테고리</th>
                     <th>케이스 제목</th>
                 </tr>
             </thead>
@@ -128,7 +124,7 @@
             if (curPage > total) curPage = total;
 
             document.getElementById('table-header').innerHTML =
-                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th style="width:140px;">카테고리</th><th>케이스 제목</th>';
+                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th>케이스 제목</th>';
 
             titleRows.forEach((r, i) => {
                 const isVisible = i >= (curPage - 1) * perPage && i < curPage * perPage;
@@ -154,7 +150,7 @@
 
             document.getElementById('pg-box').style.display = 'none';
             document.getElementById('table-header').innerHTML =
-                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th style="width:140px;">카테고리</th><th>케이스 제목</th>';
+                '<th style="width:85px;text-align:center;">No</th><th style="width:130px;">날짜</th><th>케이스 제목</th>';
 
             let matchCount = 0;
             titleRows.forEach(r => {
@@ -202,7 +198,6 @@
 
         function renderMarkdown(text) {
             if (!text) return '';
-            // 마크다운 → HTML 기본 변환
             return text
                 .replace(/^#{3}\s(.+)$/gm, '<h3>$1</h3>')
                 .replace(/^#{2}\s(.+)$/gm, '<h2>$1</h2>')
@@ -226,13 +221,12 @@
                 data.forEach(item => {
                     const tr1 = document.createElement('tr');
                     tr1.setAttribute('onclick', "toggle('" + item.id + "')");
-                    const categoryTag = item.category ? `<span class="tag">${item.category}</span>` : '';
-                    tr1.innerHTML = `<td></td><td>${item.date}</td><td>${categoryTag}</td><td>${item.title}</td>`;
+                    tr1.innerHTML = `<td></td><td>${item.date}</td><td>${item.title}</td>`;
                     const tr2 = document.createElement('tr');
                     tr2.className = 'content-row';
                     tr2.id = item.id;
                     const contentHtml = item.detail_html || renderMarkdown(item.detail || '');
-                    tr2.innerHTML = `<td colspan="4"><div class="detail-box">${contentHtml}</div></td>`;
+                    tr2.innerHTML = `<td colspan="3"><div class="detail-box">${contentHtml}</div></td>`;
                     tbody.appendChild(tr1);
                     tbody.appendChild(tr2);
                 });
