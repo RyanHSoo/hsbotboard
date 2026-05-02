@@ -23,7 +23,8 @@
         .search-input { width: 100%; padding: 14px 22px; border-radius: 30px; border: 1px solid var(--border); background: #f8fafc; outline: none; font-size: 16px; }
 
         /* [테이블 너비 최적화] */
-        .board-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); table-layout: fixed; }
+        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: 4px; }
+        .board-table { width: 100%; border-collapse: collapse; min-width: 700px; table-layout: fixed; }
         .board-table th:nth-child(1) { width: 85px; text-align: center; }
         .board-table th:nth-child(2) { width: 130px; }
         .board-table th { background: #f8fafc; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-size: 16px; }
@@ -78,6 +79,7 @@
             <input type="text" id="common-search" class="search-input" placeholder="결과 내 검색 (Enter)..." onkeypress="if(event.keyCode==13){handleSearch();}">
         </div>
 
+        <div class="table-wrapper" id="table-wrapper">
         <table class="board-table" id="data-table">
             <thead>
                 <tr id="table-header">
@@ -110,6 +112,7 @@
             
             
         </table>
+        </div>
 
         <div id="no-result-msg">🔍 검색 결과가 없습니다.</div>
 
@@ -138,7 +141,6 @@
                 const isVisible = i >= (curPage - 1) * perPage && i < curPage * perPage;
                 r.style.display = isVisible ? "" : "none";
                 r.cells[0].style.display = "";
-                // No: 맨 위 행이 가장 큰 번호 (최신순)
                 r.cells[0].innerText = titleRows.length - i;
                 const next = r.nextElementSibling;
                 if (next && next.classList.contains('content-row')) next.style.display = 'none';
@@ -148,7 +150,7 @@
             document.getElementById('prevBtn').disabled = (curPage === 1);
             document.getElementById('nextBtn').disabled = (curPage === total);
             document.getElementById('pg-box').style.display = 'flex';
-            document.getElementById('data-table').style.display = 'table';
+            document.getElementById('table-wrapper').style.display = '';
             document.getElementById('no-result-msg').style.display = 'none';
             if (window.location.hash) openAnchor();
         }
@@ -174,11 +176,10 @@
                 const next = r.nextElementSibling;
                 if (next && next.classList.contains('content-row')) next.style.display = 'none';
             });
-            document.getElementById('data-table').style.display = matchCount === 0 ? 'none' : 'table';
+            document.getElementById('table-wrapper').style.display = matchCount === 0 ? 'none' : '';
             document.getElementById('no-result-msg').style.display = matchCount === 0 ? 'block' : 'none';
         }
 
-        // 아코디언 토글 — 봇이 삽입하는 row-ID와 연결
         function toggle(id) {
             const el = document.getElementById(id);
             const isVisible = el.style.display === 'table-row';
@@ -188,10 +189,7 @@
 
         function movePage(s) { curPage += s; update(); }
 
-        // URL 앵커(#row-ID) 감지 → 해당 행 자동 펼침
-        // 텔레그램 링크 클릭 시 바로 해당 게시글이 열린 상태로 진입
         function openAnchor() {
-            // ?open=row-ID (쿼리 파라미터) 또는 #row-ID (해시) 둘 다 지원
             const params = new URLSearchParams(window.location.search);
             const targetId = params.get('open') || window.location.hash.replace('#', '');
             if (!targetId) return;
@@ -207,7 +205,7 @@
             }, 150);
         }
 
-                function loadBoard() {
+        function loadBoard() {
             const url = './board_data.json?t=' + Date.now();
             fetch(url)
               .then(r => r.json())
