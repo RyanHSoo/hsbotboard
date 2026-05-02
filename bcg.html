@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>McKinsey - Ryan's Archive</title>
+    <title>BCG - Ryan's Archive</title>
     <style>
         :root { --sidebar-bg: #ebf2ff; --primary: #2563eb; --dark: #1e293b; --border: #e2e8f0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,13 +57,13 @@
         <a href="03_finance.html" class="nav-item">💰 03 Finance</a>
         <a href="04_humanities.html" class="nav-item">📖 04 Humanities</a>
         <div class="nav-divider"></div>
-        <a href="mckinsey.html" class="nav-item nav-active">📊 McKinsey</a>
-        <a href="bcg.html" class="nav-item">💼 BCG</a>
+        <a href="mckinsey.html" class="nav-item">📊 McKinsey</a>
+        <a href="bcg.html" class="nav-item nav-active">💼 BCG</a>
         <span class="nav-item" style="color:#94a3b8;cursor:default;pointer-events:none;">📈 Gartner</span>
     </nav>
 
     <main class="main-content">
-        <h1>McKinsey</h1>
+        <h1>BCG Report</h1>
         <div class="search-container">
             <input type="text" id="common-search" class="search-input" placeholder="결과 내 검색 (Enter)..."
                    onkeypress="if(event.keyCode==13){handleSearch();}">
@@ -179,7 +179,7 @@
         }
 
         function loadBoard() {
-            fetch('./mckinsey_data.json?t=' + Date.now())
+            fetch('./bcg_data.json?t=' + Date.now())
               .then(r => r.json())
               .then(data => {
                 const tbody = document.getElementById('board-body');
