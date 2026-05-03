@@ -172,39 +172,64 @@
             setTimeout(() => { titleRow.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 150);
         }
 
-        function loadBoard() {
-            fetch('./index_data.json?t=' + Date.now())
-              .then(r => r.json())
-              .then(data => {
-                data.sort((a, b) => {
-                    const dateCmp = b.date.localeCompare(a.date);
-                    if (dateCmp !== 0) return dateCmp;
-                    const getTime = id => { const m = id.match(/(\d{8}-\d{4})/); return m ? m[1] : id; };
-                    const timeCmp = getTime(b.id).localeCompare(getTime(a.id));
-                    if (timeCmp !== 0) return timeCmp;
-                    return a.id.localeCompare(b.id);
-                });
-                // 가장 최근 2일치 데이터만 표시
-                const uniqueDates = [...new Set(data.map(item => item.date))].sort().reverse().slice(0, 2);
-                data = data.filter(item => uniqueDates.includes(item.date));
-                const tbody = document.getElementById('board-body');
-                tbody.innerHTML = '';
-                data.forEach(item => {
-                    const tr1 = document.createElement('tr');
-                    tr1.setAttribute('onclick', "toggleDetail('" + item.id + "')");
-                    tr1.innerHTML = '<td>' + item.category + '</td><td>' + item.date + '</td><td>' + item.title + '</td>';
-                    const tr2 = document.createElement('tr');
-                    tr2.className = 'content-row';
-                    tr2.id = item.id;
-                    tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail + '</div></td>';
-                    tbody.appendChild(tr1);
-                    tbody.appendChild(tr2);
-                });
-                update();
-                setTimeout(openAnchor, 100);
-              })
-              .catch(() => { update(); setTimeout(openAnchor, 100); });
+        async function loadBoard() {
+            const SOURCES = [
+                { file: 'board_data.json',       category: 'Daily News' },
+                { file: 'mckinsey_data.json',    category: 'McKinsey Report' },
+                { file: 'bcg_data.json',         category: 'BCG Report' },
+                { file: 'ai_learning_data.json', category: 'AI Learning' },
+                { file: 'finance_data.json',     category: 'Finance' },
+                { file: 'humanities_data.json',  category: 'Humanities' },
+            ];
+            const t = Date.now();
+            const all = [];
+            await Promise.all(SOURCES.map(async ({file, category}) => {
+                try {
+                    const res = await fetch('./' + file + '?t=' + t);
+                    const data = await res.json();
+                    data.forEach(item => all.push(Object.assign({}, item, {category})));
+                } catch(e) {}
+            }));
+
+            // 날짜+제목 기준 중복 제거
+            const seen = new Set();
+            const deduped = all.filter(item => {
+                const key = item.date + '|' + item.title;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+
+            deduped.sort((a, b) => {
+                const dateCmp = b.date.localeCompare(a.date);
+                if (dateCmp !== 0) return dateCmp;
+                const getTime = id => { const m = (id || '').match(/(\d{8}-\d{4})/); return m ? m[1] : (id || ''); };
+                const timeCmp = getTime(b.id).localeCompare(getTime(a.id));
+                if (timeCmp !== 0) return timeCmp;
+                return (a.id || '').localeCompare(b.id || '');
+            });
+
+            // 가장 최근 2일치만 표시
+            const uniqueDates = [...new Set(deduped.map(item => item.date))].sort().reverse().slice(0, 2);
+            const data = deduped.filter(item => uniqueDates.includes(item.date));
+
+            const tbody = document.getElementById('board-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr1 = document.createElement('tr');
+                tr1.setAttribute('onclick', "toggleDetail('" + item.id + "')");
+                tr1.innerHTML = '<td>' + item.category + '</td><td>' + item.date + '</td><td>' + item.title + '</td>';
+                const tr2 = document.createElement('tr');
+                tr2.className = 'content-row';
+                tr2.id = item.id;
+                tr2.innerHTML = '<td colspan="3"><div class="detail-box">' + item.detail + '</div></td>';
+                tbody.appendChild(tr1);
+                tbody.appendChild(tr2);
+            });
+            update();
+            setTimeout(openAnchor, 100);
         }
+
         window.addEventListener('DOMContentLoaded', loadBoard);
         window.addEventListener('hashchange', openAnchor);
         window.addEventListener('resize', update);
