@@ -1,11 +1,5 @@
 [
   {
-    "id": "row-bcg-20260515-001",
-    "date": "2026.05.16",
-    "title": "Your Personalized Top Reads",
-    "detail": "<div style=\"text-align:left;font-size:15px;color:#1e293b;line-height:1.8;\"><pre style=\"white-space:pre-wrap;font-family:inherit;\">📌 The CEO's Guide to Physical AI\n- 핵심 주제: Physical AI(물리적 AI)는 로봇, 자율주행, 스마트 제조 등 실세계와 상호작용하는 AI 시스템으로, CEO에게 가장 실질적인 다음 전략 우선구가 됨\n- 인사이트:\n  - Physical AI는 단순 소프트웨어 AI와 달리 센서, 액추엔이터, 로봇 등 하드웨어와 결합되어 제조업 미래 높지지를 구도하고 있음\n  - BCG 분석에 따르면 Physical AI 도입 선도 기업은 향후 5년 내 운영 비용 20~35% 절감과 생산성 40% 이상 향상 달성 가능\n  - CEO는 디지털 트윈, AI 코파일럿, 자율 로봇 시스템 세 가지 충위를 중심으로 전략적 로드맵 수립 필요\n- 시사점: Physical AI는 더 이상 장기 R&D 프로젝트가 아니라 지금 당장 경쟁우위를 결정짓는 전략적 우선과제임. 경영진은 도파 결정 시기와 투자 규모를 명확히 설정하고, 파일럿 프로그램을 시작해 실질적 성과를 확보해야 함\n\n📌 Winning the AI Talent War: What CEOs Must Do Now\n- 핵심 주제: AI 인재 경쟁에서 승리하는 기업은 단순 채용을 넘어 조직 전체를 AI 친화적 환경으로 재설계하는 기업\n- 인사이트:\n  - 글로벌 AI 핑스팡의 70% 이상이 소수 테크 기업에 집중됨에 따라, 일반 기업은 문화·자율성·임팩트 3요소로 도전수락을 창충해야 함\n  - AI 인재 유지율은 프로젝트 시험해 시간 제공과 실질적 사업 영향력 부여 시 65% 이상 으로 높음\n  - AI 인재 경쟁력 부족이 2028년까지 연간 약 8,500만 명에 달할 전망\n- 시사점: AI 핑스팡 유치가 현실적으로 어려운 일반 기업은 AI 어시스턴트 도구에 머핌는 설계, 기존 인재 기술 업스킬링 투자, 현장 AI 채태를 주도하는 인터널 장인 육성에 집중해야 함\n\n📌 From AI Pilot to AI at Scale: The Missing Link\n- 핵심 주제: 대다수 기업이 AI 파일럿에서 전사 구현으로 자연스럽게 확장되지 못하는 간극을 쉬평하는 프레임워크 제시\n- 인사이트:\n  - BCG 조사 결과 AI 파일럿의 74%가 초기 PoC 단계를 넘지 못함 (버루 AI 실패)\n  - 성공적 확장 요인: 데이터 거버넌스 에스쿬레이션, 포트폴리오 접근 방식, C-suite 스폰서십 세 가지\n  - AI 스케일업에 성공한 기업은 이해관계자 안학 몇 개 ROI 광시 케이스 확보 후 통합적 전사 확산 추진\n- 시사점: AI 전사 확장 실패의 근본 원인은 기술이 아닌 거버넌스·전당 모델·주요 스폰서 부재임. 경영진은 AI PoC 시작 전에 전사 확장 로드맵과 성공 지표를 먼저 정의해야 함</pre></div>"
-  },
-  {
     "id": "row-bcg-20260514-001",
     "date": "2026.05.15",
     "title": "AI Is Scaling While Costs Stay Flat",
