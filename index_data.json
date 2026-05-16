@@ -1,3 +1,15 @@
 [
   {
-    "id": "idx-stock-morning-20260516-0511"
+    "id": "idx-stock-morning-20260516-0511",
+    "category": "Daily News",
+    "date": "2026.05.16",
+    "title": "5/16 모닝 증시 브리핑",
+    "detail": "<div style=\"color:#334155;font-size:15px;text-align:left;line-height:1.8;\"><pre style=\"white-space:pre-wrap;font-family:inherit;\">📈 5/16(토) 모닝 증시 브리핑\n\n🇺🇸 뉴욕증시 마감 (5/15 기준)\n- 다우 +0.78%\n- S&P 500 +0.72%\n- 나스닥 +0.52%\n\n📌 주요 이슈\n미중 무역전쟁 휴전 이후 첫 주 거래를 마무리. 관세 유예 이후 투자심리가 회복세를 보이며 3대 지수 모두 상승 마감.\n\n🇰🇷 국내 증시 (5/15 기준)\n- 코스피 +1.22% (2,608.42)\n- 코스닥 +0.85%\n\n📊 주목 종목\n- 삼성전자: 반도체 수출 회복 기대감으로 강세\n- SK하이닉스: HBM 공급 확대 전망\n- 현대차: 미국 현지 생산 확대 수혜\n\n⚠️ 주의 포인트\n다음 주 FOMC 의사록 공개 예정. 인플레이션 지표와 연준 금리 방향에 시장 주목.</pre></div>"
+  },
+  {
+    "id": "idx-news-morning-20260516-0511",
+    "category": "Daily News",
+    "date": "2026.05.16",
+    "title": "5/16 오전 뉴스 동향",
+    "detail": "<div style=\"color:#334155;font-size:15px;text-align:left;line-height:1.8;\"><pre style=\"white-space:pre-wrap;font-family:inherit;\">📰 5/16(토) 오전 주요 뉴스 동향\n\n🌐 국제\n- 미중 제네바 합의 후속 협상 진행 중. 양국 기술 기업 수출 제한 완화 검토\n- 유럽 AI 규제법(AI Act) 세부 시행령 발표. 고위험 AI 시스템 인증 의무화\n- 중동 정세: 이스라엘-하마스 휴전 협상 재개 움직임\n\n🇰🇷 국내\n- 한국 1분기 GDP 성장률 잠정치 발표 예정\n- 반도체 수출 5개월 연속 증가세 유지\n- 서울 아파트 매매 거래량 전월 대비 소폭 증가\n\n💡 주목 트렌드\n- AI 에이전트 기업 투자 급증: 글로벌 VC, 1분기에만 $12B 투자\n- 양자컴퓨팅 상용화 논의 가속\n- 한국 스타트업 생태계: 시리즈B 이상 투자 회복세</pre></div>"
+  }]
